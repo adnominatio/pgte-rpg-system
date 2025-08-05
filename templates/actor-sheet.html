@@ -1,0 +1,201 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+  <header class="sheet-header">
+    <h1>{{actor.name}}</h1>
+    
+    <div class="character-info">
+      <div class="form-group">
+        <label>Character Name:</label>
+        <input name="system.details.characterName" type="text" value="{{system.details.characterName}}" placeholder="Character Name"/>
+      </div>
+      
+      <div class="form-group">
+        <label>Name:</label>
+        <input name="system.details.name" type="text" value="{{system.details.name}}" placeholder="True Name"/>
+      </div>
+      
+      <div class="form-group">
+        <label>Story Archetype:</label>
+        <input name="system.details.archetype" type="text" value="{{system.details.archetype}}" placeholder="e.g., The Ambitious Squire"/>
+      </div>
+      
+      <div class="form-group">
+        <label>Praesi Virtues:</label>
+        <input name="system.details.praesiVirtues" type="text" value="{{system.details.praesiVirtues}}" placeholder="Virtues"/>
+      </div>
+      
+      <div class="form-group">
+        <label>Major Flaws:</label>
+        <input name="system.details.majorFlaws" type="text" value="{{system.details.majorFlaws}}" placeholder="Major Flaws"/>
+      </div>
+    </div>
+  </header>
+
+  <div class="sheet-body">
+    <div class="tab-container">
+      <nav class="sheet-tabs tabs" data-group="primary">
+        <a class="item active" data-tab="stats">Stats & Aspects</a>
+        <a class="item" data-tab="equipment">Equipment</a>
+        <a class="item" data-tab="biography">Biography</a>
+      </nav>
+
+      <div class="tab-content">
+        <div class="tab stats active" data-group="primary" data-tab="stats">
+          
+          <!-- Stats Table -->
+          <div class="stats-section">
+            <h3>Stats</h3>
+            <table class="stats-table">
+              <thead>
+                <tr>
+                  <th>Stat</th>
+                  <th>Uses</th>
+                  <th>Die</th>
+                  <th>Roll</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each system.stats as |stat key|}}
+                <tr>
+                  <td class="stat-name">{{stat.label}}</td>
+                  <td class="stat-uses">{{stat.uses}}</td>
+                  <td class="stat-die">
+                    <select name="system.stats.{{key}}.value">
+                      <option value="d4" {{#if (eq stat.value "d4")}}selected{{/if}}>d4</option>
+                      <option value="d6" {{#if (eq stat.value "d6")}}selected{{/if}}>d6</option>
+                      <option value="d8" {{#if (eq stat.value "d8")}}selected{{/if}}>d8</option>
+                      <option value="d10" {{#if (eq stat.value "d10")}}selected{{/if}}>d10</option>
+                      <option value="d12" {{#if (eq stat.value "d12")}}selected{{/if}}>d12</option>
+                      <option value="d20" {{#if (eq stat.value "d20")}}selected{{/if}}>d20</option>
+                    </select>
+                  </td>
+                  <td class="stat-roll">
+                    <button type="button" class="roll-stat" data-stat="{{key}}" data-die="{{stat.value}}">Roll {{stat.value}}</button>
+                  </td>
+                </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Story Die and Resources -->
+          <div class="resources-section">
+            <h3>Story Die & Resources</h3>
+            
+            <div class="story-die-section">
+              <label>Story Die:</label>
+              <select name="system.resources.storyDie.value">
+                <option value="d4" {{#if (eq system.resources.storyDie.value "d4")}}selected{{/if}}>d4</option>
+                <option value="d6" {{#if (eq system.resources.storyDie.value "d6")}}selected{{/if}}>d6</option>
+                <option value="d8" {{#if (eq system.resources.storyDie.value "d8")}}selected{{/if}}>d8</option>
+                <option value="d10" {{#if (eq system.resources.storyDie.value "d10")}}selected{{/if}}>d10</option>
+                <option value="d12" {{#if (eq system.resources.storyDie.value "d12")}}selected{{/if}}>d12</option>
+                <option value="d20" {{#if (eq system.resources.storyDie.value "d20")}}selected{{/if}}>d20</option>
+              </select>
+              <button type="button" class="roll-story-die" data-die="{{system.resources.storyDie.value}}">Roll Story Die</button>
+            </div>
+            
+            <div class="hits-section">
+              <label>Hits:</label>
+              <input name="system.resources.hits.value" type="number" value="{{system.resources.hits.value}}" min="0" max="6"/>
+              <span class="hits-display">
+                {{#times system.resources.hits.value}}
+                  <span class="hit-marker">●</span>
+                {{/times}}
+                {{#times (subtract 6 system.resources.hits.value)}}
+                  <span class="hit-marker empty">○</span>
+                {{/times}}
+              </span>
+            </div>
+            
+            <div class="story-tokens-section">
+              <label>Story Tokens:</label>
+              <input name="system.resources.storyTokens.value" type="number" value="{{system.resources.storyTokens.value}}" min="0"/>
+            </div>
+          </div>
+
+          <!-- Aspects -->
+          <div class="aspects-section">
+            <h3>Aspects</h3>
+            <p><em>Choose 2 at start, gain 3rd through play</em></p>
+            
+            {{#each system.aspects as |aspect key|}}
+            <div class="aspect-block">
+              <div class="aspect-header">
+                <label>{{#if (eq key "aspect1")}}1st{{else if (eq key "aspect2")}}2nd{{else}}3rd{{/if}} Aspect:</label>
+                <input name="system.aspects.{{key}}.name" type="text" value="{{aspect.name}}" placeholder="Aspect Name"/>
+              </div>
+              
+              <div class="aspect-details">
+                <div class="form-group">
+                  <label>Nature:</label>
+                  <input name="system.aspects.{{key}}.nature" type="text" value="{{aspect.nature}}" placeholder="How it manifests"/>
+                </div>
+                
+                <div class="form-group">
+                  <label>Passive:</label>
+                  <input name="system.aspects.{{key}}.passive" type="text" value="{{aspect.passive}}" placeholder="+D4 always, if justified"/>
+                </div>
+                
+                <div class="form-group">
+                  <label>Active:</label>
+                  <input name="system.aspects.{{key}}.active" type="text" value="{{aspect.active}}" placeholder="+D12 once/day"/>
+                </div>
+                
+                <div class="form-group">
+                  <label>First Use:</label>
+                  <input name="system.aspects.{{key}}.firstUse" type="checkbox" {{#if aspect.firstUse}}checked{{/if}}/>
+                  <span class="checkbox-label">+20 to roll (one time only)</span>
+                </div>
+              </div>
+            </div>
+            {{/each}}
+          </div>
+
+          <!-- Bonus Dice -->
+          <div class="bonus-dice-section">
+            <h3>Bonus Dice</h3>
+            <div class="bonus-dice-grid">
+              <div class="bonus-item">
+                <label>Rule of Cool:</label>
+                <input name="system.bonusDice.ruleOfCool" type="checkbox" {{#if system.bonusDice.ruleOfCool}}checked{{/if}}/>
+                <span>+D4 (GM awards)</span>
+              </div>
+              
+              <div class="bonus-item">
+                <label>Pattern of Three:</label>
+                <input name="system.bonusDice.patternOfThree" type="checkbox" {{#if system.bonusDice.patternOfThree}}checked{{/if}}/>
+                <span>Extra Story Die if pattern</span>
+              </div>
+              
+              <div class="bonus-item">
+                <label>Item Die:</label>
+                <input name="system.bonusDice.itemDie" type="text" value="{{system.bonusDice.itemDie}}" placeholder="e.g., D4 D6 D8"/>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab equipment" data-group="primary" data-tab="equipment">
+          <div class="items-section">
+            <h3>Equipment</h3>
+            <div class="items-list">
+              {{#each items as |item id|}}
+              <div class="item-entry">
+                <h4>{{item.name}}</h4>
+                <p>{{item.system.description}}</p>
+              </div>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+
+        <div class="tab biography" data-group="primary" data-tab="biography">
+          <div class="biography-section">
+            <h3>Biography</h3>
+            <textarea name="system.biography" placeholder="Character backstory, motivations, etc.">{{system.biography}}</textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,129 @@
+{
+  "id": "pgte-system",
+  "title": "A Practical Guide to Evil RPG",
+  "description": "A narrative RPG system based on A Practical Guide to Evil",
+  "version": "1.0.0",
+  "compatibility": {
+    "minimum": "0.8.0",
+    "verified": "10"
+  },
+  "templateVersion": 2,
+  
+"templateVersion": 2,
+  "styles": ["styles/pgte.css"],
+  "sheetClasses": {
+    "actor": {
+      "character": {
+        "default": true,
+        "template": "templates/actor-sheet.html",
+        "type": "base"
+      }
+    }
+  },
+  
+  "styles": ["styles/pgte.css"]
+  
+  "scripts": ["scripts/pgte.js"]
+  
+  "Actor": {
+    "types": ["character"],
+    "character": {
+      "templates": ["base"],
+      "biography": "",
+      "details": {
+        "characterName": "",
+        "name": "",
+        "archetype": "",
+        "praesiVirtues": "",
+        "majorFlaws": ""
+      },
+      "stats": {
+        "sorcery": {
+          "value": "d4",
+          "label": "Sorcery",
+          "uses": "magical ability, arcane knowledge, bindings, rituals"
+        },
+        "lies": {
+          "value": "d4", 
+          "label": "Lies",
+          "uses": "stealth, flattery, charisma, deception"
+        },
+        "violence": {
+          "value": "d4",
+          "label": "Violence", 
+          "uses": "combat, weapons, physical threats"
+        },
+        "body": {
+          "value": "d4",
+          "label": "Body",
+          "uses": "endurance, agility, strength"
+        },
+        "mind": {
+          "value": "d4",
+          "label": "Mind",
+          "uses": "knowledge, investigation, quick-thinking"
+        },
+        "heart": {
+          "value": "d4",
+          "label": "Heart",
+          "uses": "insight, foresight, people skills, Story-awareness and Namelore"
+        }
+      },
+      "resources": {
+        "storyDie": {
+          "value": "d4",
+          "label": "Story Die"
+        },
+        "hits": {
+          "value": 3,
+          "max": 6,
+          "label": "Hits"
+        },
+        "storyTokens": {
+          "value": 0,
+          "label": "Story Tokens"
+        }
+      },
+      "aspects": {
+        "aspect1": {
+          "name": "",
+          "nature": "",
+          "passive": "",
+          "active": "",
+          "firstUse": true
+        },
+        "aspect2": {
+          "name": "",
+          "nature": "",
+          "passive": "",
+          "active": "",
+          "firstUse": true
+        },
+        "aspect3": {
+          "name": "",
+          "nature": "",
+          "passive": "",
+          "active": "",
+          "firstUse": true
+        }
+      },
+      "bonusDice": {
+        "ruleOfCool": false,
+        "patternOfThree": false,
+        "itemDie": ""
+      }
+    }
+  },
+  "Item": {
+    "types": ["item"],
+    "item": {
+      "templates": ["base"],
+      "description": "",
+      "quantity": 1,
+      "weight": 0,
+      "price": 0
+	  
+	  
+    }
+  }
+}
