@@ -3,6 +3,9 @@
   "title": "A Practical Guide to Evil RPG",
   "description": "A narrative RPG system based on A Practical Guide to Evil",
   "version": "1.0.0",
+  "manifest": "https://adnominatio.github.io/pgte-rpg-system/system.json",
+  "download": "https://github.com/adnominatio/pgte-rpg-system/archive/refs/heads/main.zip",
+
   "compatibility": {
     "minimum": "0.8.0",
     "verified": "10"
