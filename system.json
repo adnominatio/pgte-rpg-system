@@ -7,6 +7,8 @@
   "manifest": "https://adnominatio.github.io/pgte-rpg-system/system.json",
   "download": "https://github.com/adnominatio/pgte-rpg-system/archive/refs/heads/main.zip",
 
+  "actorTypes": ["character"],
+
   
   "compatibility": {
     "minimum": "0.8.0",
@@ -27,8 +29,8 @@
   },
   
   "styles": ["styles/pgte.css"],
-  
   "scripts": ["scripts/pgte.js"],
+  
   
   "Actor": {
     "types": ["character"],
