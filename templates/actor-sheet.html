@@ -128,23 +128,25 @@
               <div class="aspect-details">
                 <div class="form-group">
                   <label>Nature:</label>
-                  <input name="system.aspects.{{key}}.nature" type="text" value="{{aspect.nature}}" placeholder="How it manifests"/>
+                  <textarea name="system.aspects.{{key}}.nature" rows="2" style="resize: vertical;" placeholder="Its groove in the story">{{aspect.nature}}</textarea>
                 </div>
                 
                 <div class="form-group">
                   <label>Passive:</label>
-                  <input name="system.aspects.{{key}}.passive" type="text" value="{{aspect.passive}}" placeholder="+D4 always, if justified"/>
+                  <button type="button" class="roll-aspect" 
+                          data-die="{{#if (eq key 'aspect3')}}d4{{else}}d4{{/if}}" 
+                          data-type="Passive" data-name="{{aspect.name}}">
+                    +D4
+                  </button>
                 </div>
                 
                 <div class="form-group">
                   <label>Active:</label>
-                  <input name="system.aspects.{{key}}.active" type="text" value="{{aspect.active}}" placeholder="+D12 once/day"/>
-                </div>
-                
-                <div class="form-group">
-                  <label>First Use:</label>
-                  <input name="system.aspects.{{key}}.firstUse" type="checkbox" {{#if aspect.firstUse}}checked{{/if}}/>
-                  <span class="checkbox-label">+20 to roll (one time only)</span>
+                  <button type="button" class="roll-aspect" 
+                          data-die="{{#if (eq key 'aspect3')}}d20{{else}}d12{{/if}}" 
+                          data-type="Active" data-name="{{aspect.name}}">
+                    {{#if (eq key 'aspect3')}}+D20{{else}}+D12{{/if}}
+                  </button>
                 </div>
               </div>
             </div>
@@ -157,19 +159,25 @@
             <div class="bonus-dice-grid">
               <div class="bonus-item">
                 <label>Rule of Cool:</label>
-                <input name="system.bonusDice.ruleOfCool" type="checkbox" {{#if system.bonusDice.ruleOfCool}}checked{{/if}}/>
-                <span>+D4 (GM awards)</span>
+                <button type="button" class="roll-extra" data-die="d4">+D4</button>
               </div>
               
               <div class="bonus-item">
                 <label>Pattern of Three:</label>
-                <input name="system.bonusDice.patternOfThree" type="checkbox" {{#if system.bonusDice.patternOfThree}}checked{{/if}}/>
-                <span>Extra Story Die if pattern</span>
+                <button type="button" class="roll-story">Roll Story Die</button>
               </div>
               
               <div class="bonus-item">
                 <label>Item Die:</label>
-                <input name="system.bonusDice.itemDie" type="text" value="{{system.bonusDice.itemDie}}" placeholder="e.g., D4 D6 D8"/>
+                <select name="system.bonusDice.itemDie">
+                  <option value="">—</option>
+                  <option value="d4" {{#if (eq system.bonusDice.itemDie "d4")}}selected{{/if}}>d4</option>
+                  <option value="d6" {{#if (eq system.bonusDice.itemDie "d6")}}selected{{/if}}>d6</option>
+                  <option value="d8" {{#if (eq system.bonusDice.itemDie "d8")}}selected{{/if}}>d8</option>
+                  <option value="d10" {{#if (eq system.bonusDice.itemDie "d10")}}selected{{/if}}>d10</option>
+                  <option value="d12" {{#if (eq system.bonusDice.itemDie "d12")}}selected{{/if}}>d12</option>
+                  <option value="d20" {{#if (eq system.bonusDice.itemDie "d20")}}selected{{/if}}>d20</option>
+                </select>
               </div>
             </div>
           </div>
