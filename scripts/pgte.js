@@ -1,52 +1,116 @@
-Hooks.on("ready", () => {
-  // Aspect rolls
-  document.querySelectorAll(".roll-aspect").forEach(btn => {
-    btn.addEventListener("click", async evt => {
-      const die = evt.currentTarget.dataset.die;
-      const type = evt.currentTarget.dataset.type;
-      const name = evt.currentTarget.dataset.name || "Aspect";
-      const roll = await new Roll(`1${die}`).roll({async: true});
-      roll.toMessage({
-        flavor: `<b>${name}</b> (${type})`
-      });
+// Define the custom sheet class
+class PGTEActorSheet extends ActorSheet {
+  static get defaultOptions() {
+    return mergeObject(super.defaultOptions, {
+      classes: ["pgte-rpg-system", "sheet", "actor"],
+      template: "systems/pgte-rpg-system/templates/actor-sheet.html",
+      width: 700,
+      height: 800,
+      tabs: [{navSelector: ".sheet-tabs", contentSelector: ".tab-content", initial: "stats"}]
     });
-  });
+  }
 
-  // Extra +D4 roll (Rule of Cool)
-  document.querySelectorAll(".roll-extra").forEach(btn => {
-    btn.addEventListener("click", async evt => {
-      const die = evt.currentTarget.dataset.die;
-      const roll = await new Roll(`1${die}`).roll({async: true});
-      roll.toMessage({flavor: `Extra ${die} Roll`});
-    });
-  });
+  // Prepare data for the sheet
+  getData() {
+    const context = super.getData();
+    
+    // Add stat labels and uses descriptions
+    if (context.system.stats) {
+      context.system.stats.sorcery.label = "SORCERY";
+      context.system.stats.sorcery.uses = "magical ability, arcane knowledge";
+      context.system.stats.lies.label = "LIES";
+      context.system.stats.lies.uses = "stealth, flattery, charisma, deception";
+      context.system.stats.violence.label = "VIOLENCE";
+      context.system.stats.violence.uses = "combat, hitting, physical threats";
+      context.system.stats.body.label = "BODY";
+      context.system.stats.body.uses = "endurance, agility, strength";
+      context.system.stats.mind.label = "MIND";
+      context.system.stats.mind.uses = "knowledge, quick-thinking, investigation";
+      context.system.stats.heart.label = "HEART";
+      context.system.stats.heart.uses = "insight, foresight, people skills";
+    }
+    
+    return context;
+  }
 
-  // Pattern of Three: Roll Story Die again
-  document.querySelectorAll(".roll-story").forEach(btn => {
-    btn.addEventListener("click", async evt => {
-      const storyDieEl = document.querySelector("select[name='system.resources.storyDie.value']");
-      const die = storyDieEl?.value || "d4";
-      const roll = await new Roll(`1${die}`).roll({async: true});
-      roll.toMessage({flavor: `Pattern of Three: Story Die`});
-    });
-  });
+  // Handle sheet events
+  activateListeners(html) {
+    super.activateListeners(html);
+    
+    // Move all your existing roll button code here
+    html.find('.roll-stat').click(this._onRollStat.bind(this));
+    html.find('.roll-aspect').click(this._onRollAspect.bind(this));
+    html.find('.roll-story-die').click(this._onRollStoryDie.bind(this));
+    html.find('.roll-extra').click(this._onRollExtra.bind(this));
+    html.find('.roll-story').click(this._onRollStory.bind(this));
+  }
 
-  // Stat rolls
-  document.querySelectorAll(".roll-stat").forEach(btn => {
-    btn.addEventListener("click", async evt => {
-      const stat = evt.currentTarget.dataset.stat;
-      const die = evt.currentTarget.dataset.die;
-      const roll = await new Roll(`1${die}`).roll({async: true});
-      roll.toMessage({flavor: `Rolling ${stat}: ${die}`});
+  // Roll methods
+  async _onRollStat(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const stat = element.dataset.stat;
+    const die = element.dataset.die;
+    const roll = await new Roll(`1${die}`).roll({async: true});
+    roll.toMessage({
+      speaker: ChatMessage.getSpeaker({actor: this.actor}),
+      flavor: `Rolling ${stat}: ${die}`
     });
-  });
+  }
 
-  // Story Die main roll
-  document.querySelectorAll(".roll-story-die").forEach(btn => {
-    btn.addEventListener("click", async evt => {
-      const die = evt.currentTarget.dataset.die;
-      const roll = await new Roll(`1${die}`).roll({async: true});
-      roll.toMessage({flavor: `Rolling Story Die: ${die}`});
+  async _onRollAspect(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const die = element.dataset.die;
+    const type = element.dataset.type;
+    const name = element.dataset.name || "Aspect";
+    const roll = await new Roll(`1${die}`).roll({async: true});
+    roll.toMessage({
+      speaker: ChatMessage.getSpeaker({actor: this.actor}),
+      flavor: `<b>${name}</b> (${type})`
     });
+  }
+
+  async _onRollStoryDie(event) {
+    event.preventDefault();
+    const die = this.actor.system.resources.storyDie.value || "d4";
+    const roll = await new Roll(`1${die}`).roll({async: true});
+    roll.toMessage({
+      speaker: ChatMessage.getSpeaker({actor: this.actor}),
+      flavor: `Rolling Story Die: ${die}`
+    });
+  }
+
+  async _onRollExtra(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const die = element.dataset.die;
+    const roll = await new Roll(`1${die}`).roll({async: true});
+    roll.toMessage({
+      speaker: ChatMessage.getSpeaker({actor: this.actor}),
+      flavor: `Extra ${die} Roll`
+    });
+  }
+
+  async _onRollStory(event) {
+    event.preventDefault();
+    const die = this.actor.system.resources.storyDie.value || "d4";
+    const roll = await new Roll(`1${die}`).roll({async: true});
+    roll.toMessage({
+      speaker: ChatMessage.getSpeaker({actor: this.actor}),
+      flavor: `Pattern of Three: Story Die`
+    });
+  }
+}
+
+// Register the sheet
+Hooks.once("init", function() {
+  Actors.unregisterSheet("core", ActorSheet);
+  Actors.registerSheet("pgte-rpg-system", PGTEActorSheet, {
+    types: ["character", "npc"],
+    makeDefault: true,
+    label: "PGTE Character Sheet"
   });
 });
+
+// Remove the old Hooks.on("ready") block since we're handling events in the sheet class now
