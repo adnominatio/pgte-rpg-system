@@ -21,6 +21,8 @@
 
 
 "actorTypes": ["character", "npc"],
+"defaultActorType": "character",
+
 
 "Actor": {
   "types": ["character", "npc"],
