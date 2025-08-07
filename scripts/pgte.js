@@ -14,24 +14,34 @@ class PGTEActorSheet extends ActorSheet {
   getData() {
     const context = super.getData();
     
-    // Add stat labels and uses descriptions
-    if (context.system.stats) {
-      context.system.stats.sorcery.label = "SORCERY";
-      context.system.stats.sorcery.uses = "magical ability, arcane knowledge";
-      context.system.stats.lies.label = "LIES";
-      context.system.stats.lies.uses = "stealth, flattery, charisma, deception";
-      context.system.stats.violence.label = "VIOLENCE";
-      context.system.stats.violence.uses = "combat, hitting, physical threats";
-      context.system.stats.body.label = "BODY";
-      context.system.stats.body.uses = "endurance, agility, strength";
-      context.system.stats.mind.label = "MIND";
-      context.system.stats.mind.uses = "knowledge, quick-thinking, investigation";
-      context.system.stats.heart.label = "HEART";
-      context.system.stats.heart.uses = "insight, foresight, people skills";
-    }
-    
-    return context;
+	context.system = context.actor.system || {};
+
+  // Initialize stats if they don't exist
+  if (!context.system.stats) {
+    context.system.stats = {
+      sorcery: { value: "d4", label: "SORCERY", uses: "magical ability, arcane knowledge" },
+      lies: { value: "d4", label: "LIES", uses: "stealth, flattery, charisma, deception" },
+      violence: { value: "d4", label: "VIOLENCE", uses: "combat, hitting, physical threats" },
+      body: { value: "d4", label: "BODY", uses: "endurance, agility, strength" },
+      mind: { value: "d4", label: "MIND", uses: "knowledge, quick-thinking, investigation" },
+      heart: { value: "d4", label: "HEART", uses: "insight, foresight, people skills" }
+    };
+  } else {
+    // Add labels if stats exist but labels don't
+    context.system.stats.sorcery.label = "SORCERY";
+    context.system.stats.sorcery.uses = "magical ability, arcane knowledge";
+    context.system.stats.lies.label = "LIES";
+    context.system.stats.lies.uses = "stealth, flattery, charisma, deception";
+    context.system.stats.violence.label = "VIOLENCE";
+    context.system.stats.violence.uses = "combat, hitting, physical threats";
+    context.system.stats.body.label = "BODY";
+    context.system.stats.body.uses = "endurance, agility, strength";
+    context.system.stats.mind.label = "MIND";
+    context.system.stats.mind.uses = "knowledge, quick-thinking, investigation";
+    context.system.stats.heart.label = "HEART";
+    context.system.stats.heart.uses = "insight, foresight, people skills";
   }
+  
 
   // Handle sheet events
   activateListeners(html) {
