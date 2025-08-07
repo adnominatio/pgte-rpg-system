@@ -2,12 +2,11 @@
   "id": "pgte-rpg-system",
   "title": "A Practical Guide to Evil RPG",
   "description": "A narrative RPG system based on A Practical Guide to Evil",
-  "version": "1.0.5",
+  "version": "1.0.6",
 
   "manifest": "https://adnominatio.github.io/pgte-rpg-system/system.json",
   "download": "https://github.com/adnominatio/pgte-rpg-system/archive/refs/heads/main.zip",
 
-  "actorTypes": ["character"],
 
   "compatibility": {
     "minimum": "11",
@@ -19,15 +18,7 @@
   "styles": ["styles/pgte.css"],
   "scripts": ["scripts/pgte.js"],
 
-  "sheetClasses": {
-    "actor": {
-      "character": {
-        "default": true,
-        "template": "templates/actor-sheet.html",
-        "type": "base"
-      }
-    }
-  },
+
 
 "actorTypes": ["character", "npc"],
 
