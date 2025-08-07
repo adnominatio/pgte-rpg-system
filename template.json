@@ -1,0 +1,51 @@
+{
+  "Actor": {
+    "types": ["character", "npc"],
+    "templates": {
+      "base": {
+        "stats": {
+          "sorcery": { "value": "d4" },
+          "lies": { "value": "d4" },
+          "violence": { "value": "d4" },
+          "body": { "value": "d4" },
+          "mind": { "value": "d4" },
+          "heart": { "value": "d4" }
+        },
+        "hits": {
+          "value": 3,
+          "max": 3
+        },
+        "storyDie": { "value": "d4" },
+        "aspects": {
+          "first": { "name": "", "nature": "", "passive": "", "active": "" },
+          "second": { "name": "", "nature": "", "passive": "", "active": "" },
+          "third": { "name": "", "nature": "", "passive": "", "active": "" }
+        },
+        "storyTokens": { "value": 0 }
+      }
+    },
+    "character": {
+      "templates": ["base"]
+    },
+    "npc": {
+      "templates": ["base"]
+    }
+  },
+  "Item": {
+    "types": ["item", "feature", "spell"],
+    "templates": {
+      "base": {
+        "description": ""
+      }
+    },
+    "item": {
+      "templates": ["base"]
+    },
+    "feature": {
+      "templates": ["base"]
+    },
+    "spell": {
+      "templates": ["base"]
+    }
+  }
+}
