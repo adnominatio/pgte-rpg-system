@@ -9,8 +9,9 @@
   --hover-primary: #B90E0A; /*crimson*/
   --roll-stat-name-hover: rgba(114, 47, 55, 0.2);
   --success-color: #27ae60;
-  --color-primary-light: #a29bfe;
-  --color-primary-light-hover: #74b9ff;
+  --color-primary-light: #710C04; /*blood*/
+  --color-primary-light-hover: #B90E0A; /*crimson*/
+  --box-shadow: rgba(108, 92, 231, 0.2);
 }
 
   /* CSS Variables for easy color management */
@@ -93,7 +94,7 @@ textarea::placeholder {
 
 .roll-stat-name:hover {
   background: rgba(108, 92, 231, 0.2);
-  border-color: var(--color-primary);
+  border-color: var(--roll-stat-name-hover);
 }
 
 /* Resources row layout */
@@ -148,7 +149,7 @@ textarea::placeholder {
   height: 20px;
   padding: 0;
   font-size: 0.8em;
-  background: var(--color-primary);
+  background: var(--color-primary-light-hover);
   color: white;
   border: none;
   border-radius: 3px;
@@ -265,7 +266,7 @@ textarea::placeholder {
 }
 
 .aspect-buttons button:hover {
-  background: var(--color-primary-light);
+  background: var(--color-primary-light-hover);
 }
 
 /* Bonus dice section */
@@ -469,5 +470,5 @@ button:disabled {
 .form-group textarea:focus {
   outline: none;
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.2);
+  box-shadow: 0 0 0 2px var(--box-shadow);
 }
