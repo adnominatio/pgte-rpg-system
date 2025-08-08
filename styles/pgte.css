@@ -1,8 +1,8 @@
 /* Character title styling */
 .character-title {
   text-align: center;
-  font-size: 2em;
-  margin-bottom: 1rem;
+  font-size: 2.2em;
+  margin: 0.5rem 0 1rem 0;
   font-weight: bold;
 }
 
@@ -17,14 +17,26 @@
   flex: 1;
 }
 
+.form-row .form-group.expanded {
+  flex: 1;
+}
+
 .character-info .form-group {
   margin-bottom: 0.5rem;
 }
 
 .character-info .form-group label {
-  display: inline-block;
-  width: 120px;
+  display: block;
   text-align: left;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+/* Lighter placeholder text */
+input::placeholder,
+textarea::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+  font-style: italic;
 }
 
 /* Stats table */
@@ -40,6 +52,23 @@
   border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
+/* Clickable stat names */
+.roll-stat-name {
+  background: none;
+  border: none;
+  color: inherit;
+  font-weight: bold;
+  font-size: inherit;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.roll-stat-name:hover {
+  background: rgba(108, 92, 231, 0.2);
+}
+
 /* Resources row layout */
 .resources-row {
   display: flex;
@@ -48,6 +77,7 @@
   padding: 1rem;
   background: rgba(255,255,255,0.05);
   border-radius: 6px;
+  align-items: flex-start;
 }
 
 .resource-group {
@@ -60,23 +90,24 @@
   margin-bottom: 0.5rem;
 }
 
-/* Hits control */
+/* Hits section redesign */
+.hits-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
 .hits-control {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.hits-input,
-.tokens-input {
-  width: 50px;
-  text-align: center;
-}
-
 .base-hits {
   width: 40px;
   text-align: center;
   font-size: 0.9em;
+  margin-left: 0.25rem;
 }
 
 .toggle-buttons {
@@ -101,7 +132,7 @@
   background: var(--color-primary-light, #a29bfe);
 }
 
-/* Hit markers */
+/* Hit markers - green filled, darker empty */
 .hits-display {
   display: flex;
   gap: 2px;
@@ -114,16 +145,36 @@
 }
 
 .hit-marker.filled {
-  color: #e74c3c;
+  color: #27ae60; /* Green */
 }
 
 .hit-marker.empty {
-  color: rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.6); /* Darker empty circles */
 }
 
-/* Story die styling */
+/* Story tokens aligned */
+.tokens-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tokens-display {
+  font-size: 1.2em;
+  font-weight: bold;
+  min-width: 30px;
+  text-align: center;
+}
+
+/* Story die control */
+.story-die-control {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
 .story-die-select {
-  margin-right: 0.5rem;
+  width: auto;
 }
 
 /* Aspects grid layout */
@@ -286,6 +337,69 @@
 .notes-area textarea {
   width: 100%;
   min-height: 80px;
+  resize: vertical;
+}
+
+/* Items section */
+.items-section {
+  margin: 1rem 0;
+}
+
+.item-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.item-row input[type="text"] {
+  flex: 1;
+}
+
+.qty-input {
+  width: 60px;
+  text-align: center;
+}
+
+/* Tab styling */
+.sheet-tabs {
+  display: flex;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  margin-bottom: 1rem;
+}
+
+.sheet-tabs .item {
+  padding: 0.5rem 1rem;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-bottom: none;
+  margin-right: 0.25rem;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+.sheet-tabs .item.active {
+  background: rgba(255,255,255,0.2);
+  border-color: rgba(255,255,255,0.3);
+}
+
+.sheet-tabs .item:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+.tab-content .tab {
+  display: none;
+}
+
+.tab-content .tab.active {
+  display: block;
+}
+
+/* Biography section */
+.biography-section textarea {
+  width: 100%;
+  min-height: 200px;
   resize: vertical;
 }
 

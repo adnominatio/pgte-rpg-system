@@ -14,20 +14,28 @@
       </div>
       
       <div class="form-row">
-        <div class="form-group">
+        <div class="form-group expanded">
           <label>Praesi Virtues:</label>
-          <input name="system.details.praesiVirtues" type="text" value="{{system.details.praesiVirtues}}" placeholder="Virtues"/>
+          <textarea name="system.details.praesiVirtues" rows="2" placeholder="Virtues">{{system.details.praesiVirtues}}</textarea>
         </div>
         
-        <div class="form-group">
+        <div class="form-group expanded">
           <label>Major Flaws:</label>
-          <input name="system.details.majorFlaws" type="text" value="{{system.details.majorFlaws}}" placeholder="Major Flaws"/>
+          <textarea name="system.details.majorFlaws" rows="2" placeholder="Major Flaws">{{system.details.majorFlaws}}</textarea>
         </div>
       </div>
     </div>
   </header>
 
   <div class="sheet-body">
+    <div class="tab-container">
+      <nav class="sheet-tabs tabs" data-group="primary">
+        <a class="item active" data-tab="main">Character Sheet</a>
+        <a class="item" data-tab="biography">Notes</a>
+      </nav>
+
+      <div class="tab-content">
+        <div class="tab main active" data-group="primary" data-tab="main">
     <!-- Stats Table -->
     <div class="stats-section">
       <h3>Stats</h3>
@@ -43,7 +51,9 @@
         <tbody>
           {{#each system.stats as |stat key|}}
           <tr>
-            <td class="stat-name">{{stat.label}}</td>
+            <td class="stat-name">
+              <button type="button" class="roll-stat-name" data-stat="{{stat.label}}" data-die="{{stat.value}}">{{stat.label}}</button>
+            </td>
             <td class="stat-uses">{{stat.uses}}</td>
             <td class="stat-die">
               <select name="system.stats.{{key}}.value">
@@ -55,9 +65,6 @@
                 <option value="d20" {{#if (eq stat.value "d20")}}selected{{/if}}>d20</option>
               </select>
             </td>
-            <td class="stat-roll">
-              <button type="button" class="roll-stat" data-stat="{{key}}" data-die="{{stat.value}}">Roll {{stat.value}}</button>
-            </td>
           </tr>
           {{/each}}
         </tbody>
@@ -67,20 +74,21 @@
     <!-- Resources Row -->
     <div class="resources-row">
       <div class="resource-group">
-        <label>Hits (Base <input name="system.resources.hits.max" type="number" value="{{system.resources.hits.max}}" min="1" max="10" class="base-hits"/>)</label>
-        <div class="hits-control">
-          <input name="system.resources.hits.value" type="number" value="{{system.resources.hits.value}}" min="0" max="{{system.resources.hits.max}}" class="hits-input"/>
-          <div class="toggle-buttons">
-            <button type="button" class="hits-up">▲</button>
-            <button type="button" class="hits-down">▼</button>
-          </div>
-          <div class="hits-display">
-            {{#times system.resources.hits.value}}
-              <span class="hit-marker filled">●</span>
-            {{/times}}
-            {{#times (subtract system.resources.hits.max system.resources.hits.value)}}
-              <span class="hit-marker empty">○</span>
-            {{/times}}
+        <div class="hits-section">
+          <label>Base Hits: <input name="system.resources.hits.max" type="number" value="{{system.resources.hits.max}}" min="1" max="10" class="base-hits"/></label>
+          <div class="hits-control">
+            <div class="toggle-buttons">
+              <button type="button" class="hits-up">▲</button>
+              <button type="button" class="hits-down">▼</button>
+            </div>
+            <div class="hits-display">
+              {{#times system.resources.hits.value}}
+                <span class="hit-marker filled">●</span>
+              {{/times}}
+              {{#times (subtract system.resources.hits.max system.resources.hits.value)}}
+                <span class="hit-marker empty">○</span>
+              {{/times}}
+            </div>
           </div>
         </div>
       </div>
@@ -88,7 +96,7 @@
       <div class="resource-group">
         <label>Story Tokens</label>
         <div class="tokens-control">
-          <input name="system.resources.storyTokens.value" type="number" value="{{system.resources.storyTokens.value}}" min="0" class="tokens-input"/>
+          <div class="tokens-display">{{system.resources.storyTokens.value}}</div>
           <div class="toggle-buttons">
             <button type="button" class="tokens-up">▲</button>
             <button type="button" class="tokens-down">▼</button>
@@ -97,16 +105,18 @@
       </div>
       
       <div class="resource-group">
-        <label>Story Die ({{system.resources.storyDie.value}})</label>
-        <select name="system.resources.storyDie.value" class="story-die-select">
-          <option value="d4" {{#if (eq system.resources.storyDie.value "d4")}}selected{{/if}}>d4</option>
-          <option value="d6" {{#if (eq system.resources.storyDie.value "d6")}}selected{{/if}}>d6</option>
-          <option value="d8" {{#if (eq system.resources.storyDie.value "d8")}}selected{{/if}}>d8</option>
-          <option value="d10" {{#if (eq system.resources.storyDie.value "d10")}}selected{{/if}}>d10</option>
-          <option value="d12" {{#if (eq system.resources.storyDie.value "d12")}}selected{{/if}}>d12</option>
-          <option value="d20" {{#if (eq system.resources.storyDie.value "d20")}}selected{{/if}}>d20</option>
-        </select>
-        <button type="button" class="roll-story-die">Roll Story Die</button>
+        <label>Story Die</label>
+        <div class="story-die-control">
+          <select name="system.resources.storyDie.value" class="story-die-select">
+            <option value="d4" {{#if (eq system.resources.storyDie.value "d4")}}selected{{/if}}>d4</option>
+            <option value="d6" {{#if (eq system.resources.storyDie.value "d6")}}selected{{/if}}>d6</option>
+            <option value="d8" {{#if (eq system.resources.storyDie.value "d8")}}selected{{/if}}>d8</option>
+            <option value="d10" {{#if (eq system.resources.storyDie.value "d10")}}selected{{/if}}>d10</option>
+            <option value="d12" {{#if (eq system.resources.storyDie.value "d12")}}selected{{/if}}>d12</option>
+            <option value="d20" {{#if (eq system.resources.storyDie.value "d20")}}selected{{/if}}>d20</option>
+          </select>
+          <button type="button" class="roll-story-die">Roll Story Die</button>
+        </div>
       </div>
     </div>
 
@@ -264,6 +274,16 @@
       </div>
       <div class="notes-area">
         <textarea name="system.notes.patternOfThree" rows="3" placeholder="Notes about patterns, recurring themes, or story elements...">{{system.notes.patternOfThree}}</textarea>
+      </div>
+    </div>
+        </div>
+
+        <div class="tab biography" data-group="primary" data-tab="biography">
+          <div class="biography-section">
+            <h3>Biography & Notes</h3>
+            <textarea name="system.biography" rows="10" placeholder="Character backstory, motivations, connections, etc.">{{system.biography}}</textarea>
+          </div>
+        </div>
       </div>
     </div>
   </div>

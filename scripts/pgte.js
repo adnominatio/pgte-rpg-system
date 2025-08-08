@@ -21,7 +21,7 @@ class PGTEActorSheet extends ActorSheet {
       template: "systems/pgte-rpg-system/templates/actor-sheet.html",
       width: 800,
       height: 900,
-      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".tab-content", initial: "stats" }]
+      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".tab-content", initial: "main" }]
     });
   }
 
@@ -100,6 +100,7 @@ class PGTEActorSheet extends ActorSheet {
 
     // Rolls
     html.find('.roll-stat').click(this._onRollStat.bind(this));
+    html.find('.roll-stat-name').click(this._onRollStatName.bind(this));
     html.find('.roll-aspect').click(this._onRollAspect.bind(this));
     html.find('.roll-story-die').click(this._onRollStoryDie.bind(this));
     html.find('.roll-extra').click(this._onRollExtra.bind(this));
@@ -167,6 +168,16 @@ class PGTEActorSheet extends ActorSheet {
   }
 
   async _onRollStat(event) {
+    event.preventDefault();
+    const { stat, die } = event.currentTarget.dataset;
+    const roll = await new Roll(`1${die}`).roll({ async: true });
+    roll.toMessage({
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+      flavor: `Rolling ${stat}: ${die}`
+    });
+  }
+
+  async _onRollStatName(event) {
     event.preventDefault();
     const { stat, die } = event.currentTarget.dataset;
     const roll = await new Roll(`1${die}`).roll({ async: true });
