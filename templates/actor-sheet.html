@@ -12,18 +12,6 @@
         <label>Story Archetype:</label>
         <input name="system.details.archetype" type="text" value="{{system.details.archetype}}" placeholder="Ambitious nobleman with delusions of grandeur"/>
       </div>
-      
-      <div class="form-row">
-        <div class="form-group expanded">
-          <label>Praesi Virtues:</label>
-          <textarea name="system.details.praesiVirtues" rows="2" placeholder="Virtues">{{system.details.praesiVirtues}}</textarea>
-        </div>
-        
-        <div class="form-group expanded">
-          <label>Major Flaws:</label>
-          <textarea name="system.details.majorFlaws" rows="2" placeholder="Major Flaws">{{system.details.majorFlaws}}</textarea>
-        </div>
-      </div>
     </div>
   </header>
 
@@ -279,6 +267,20 @@
         </div>
 
         <div class="tab biography" data-group="primary" data-tab="biography">
+          <div class="character-details-section">
+            <div class="form-row">
+              <div class="form-group expanded">
+                <label>Praesi Virtues:</label>
+                <textarea name="system.details.praesiVirtues" rows="3" placeholder="Virtues">{{system.details.praesiVirtues}}</textarea>
+              </div>
+              
+              <div class="form-group expanded">
+                <label>Major Flaws:</label>
+                <textarea name="system.details.majorFlaws" rows="3" placeholder="Major Flaws">{{system.details.majorFlaws}}</textarea>
+              </div>
+            </div>
+          </div>
+          
           <div class="biography-section">
             <h3>Biography & Notes</h3>
             <textarea name="system.biography" rows="10" placeholder="Character backstory, motivations, connections, etc.">{{system.biography}}</textarea>

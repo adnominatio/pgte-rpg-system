@@ -1,3 +1,18 @@
+/* Import core Foundry styles to ensure icon fonts work */
+@import url("../../ui/foundry.css");
+
+/* CSS Variables for easy color management */
+:root {
+  --placeholder-color: rgba(255, 255, 255, 0.7);
+  --text-color: rgba(255, 255, 255, 1);
+  --border-color: rgba(255, 255, 255, 0.2);
+  --background-light: rgba(255, 255, 255, 0.05);
+  --background-medium: rgba(255, 255, 255, 0.1);
+  --primary-color: #6c5ce7;
+  --primary-hover: #a29bfe;
+  --success-color: #27ae60;
+}
+
 /* Character title styling */
 .character-title {
   text-align: center;
@@ -32,10 +47,10 @@
   margin-bottom: 0.25rem;
 }
 
-/* Lighter placeholder text */
+/* Better placeholder text - using variable */
 input::placeholder,
 textarea::placeholder {
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--placeholder-color);
   font-style: italic;
 }
 
@@ -49,24 +64,27 @@ textarea::placeholder {
 .stats-table td {
   padding: 0.5rem;
   text-align: left;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid var(--border-color);
 }
 
-/* Clickable stat names */
+/* Clickable stat names with boxes */
 .roll-stat-name {
-  background: none;
-  border: none;
+  background: var(--background-medium);
+  border: 1px solid var(--border-color);
   color: inherit;
   font-weight: bold;
   font-size: inherit;
   cursor: pointer;
-  padding: 0.25rem 0.5rem;
+  padding: 0.5rem;
   border-radius: 4px;
-  transition: background-color 0.2s;
+  transition: all 0.2s;
+  width: 100%;
+  text-align: left;
 }
 
 .roll-stat-name:hover {
   background: rgba(108, 92, 231, 0.2);
+  border-color: var(--primary-color);
 }
 
 /* Resources row layout */
@@ -132,24 +150,26 @@ textarea::placeholder {
   background: var(--color-primary-light, #a29bfe);
 }
 
-/* Hit markers - green filled, darker empty */
+/* Hit markers - green filled, black empty */
 .hits-display {
   display: flex;
   gap: 2px;
   margin-left: 0.5rem;
+  align-items: center;
 }
 
 .hit-marker {
   font-size: 1.2em;
   cursor: pointer;
+  line-height: 1;
 }
 
 .hit-marker.filled {
-  color: #27ae60; /* Green */
+  color: var(--success-color); /* Green */
 }
 
 .hit-marker.empty {
-  color: rgba(255,255,255,0.6); /* Darker empty circles */
+  color: #000000; /* Black empty circles */
 }
 
 /* Story tokens aligned */

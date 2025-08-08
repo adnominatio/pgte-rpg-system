@@ -14,6 +14,26 @@ Handlebars.registerHelper("eq", function(a, b) {
   return a === b;
 });
 
+Hooks.once("init", function() {
+  // Ensure core Foundry fonts and icons are available
+  console.log("PGTE System: Initializing with icon font support");
+  
+  Actors.unregisterSheet("core", ActorSheet);
+  Actors.registerSheet("pgte-rpg-system", PGTEActorSheet, {
+    types: ["character", "npc"],
+    makeDefault: true,
+    label: "PGTE Character Sheet"
+  });
+});
+
+Hooks.once("ready", function() {
+  console.log("PGTE System: Ready - checking for icon fonts");
+  // Verify FontAwesome is loaded
+  if (!document.querySelector('link[href*="fontawesome"]')) {
+    console.warn("PGTE System: FontAwesome may not be loaded properly");
+  }
+});
+
 class PGTEActorSheet extends ActorSheet {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
