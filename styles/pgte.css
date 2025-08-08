@@ -1,45 +1,330 @@
-/* Aspect block styling */
-.aspect-block {
-  border: 1px solid rgba(255,255,255,0.1);
-  background: rgba(255,255,255,0.03);
-  padding: 0.5rem;
+/* Character title styling */
+.character-title {
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+/* Form layout improvements */
+.form-row {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-start;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+.character-info .form-group {
   margin-bottom: 0.5rem;
+}
+
+.character-info .form-group label {
+  display: inline-block;
+  width: 120px;
+  text-align: left;
+}
+
+/* Stats table */
+.stats-table {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.stats-table th,
+.stats-table td {
+  padding: 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Resources row layout */
+.resources-row {
+  display: flex;
+  gap: 2rem;
+  margin: 1rem 0;
+  padding: 1rem;
+  background: rgba(255,255,255,0.05);
   border-radius: 6px;
 }
 
-/* Aspect buttons */
-.aspect-block button {
+.resource-group {
+  flex: 1;
+}
+
+.resource-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+/* Hits control */
+.hits-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hits-input,
+.tokens-input {
+  width: 50px;
+  text-align: center;
+}
+
+.base-hits {
+  width: 40px;
+  text-align: center;
+  font-size: 0.9em;
+}
+
+.toggle-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.toggle-buttons button {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  font-size: 0.8em;
+  background: var(--color-primary, #6c5ce7);
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.toggle-buttons button:hover {
+  background: var(--color-primary-light, #a29bfe);
+}
+
+/* Hit markers */
+.hits-display {
+  display: flex;
+  gap: 2px;
   margin-left: 0.5rem;
+}
+
+.hit-marker {
+  font-size: 1.2em;
+  cursor: pointer;
+}
+
+.hit-marker.filled {
+  color: #e74c3c;
+}
+
+.hit-marker.empty {
+  color: rgba(255,255,255,0.3);
+}
+
+/* Story die styling */
+.story-die-select {
+  margin-right: 0.5rem;
+}
+
+/* Aspects grid layout */
+.aspects-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.aspect-column {
+  flex: 1;
+}
+
+.aspect-block {
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.03);
+  padding: 0.75rem;
+  border-radius: 6px;
+  height: 100%;
+}
+
+.aspect-header {
+  margin-bottom: 0.5rem;
+}
+
+.aspect-header label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+.aspect-header input {
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.aspect-details textarea {
+  width: 100%;
+  min-height: 60px;
+  resize: vertical;
+  margin-bottom: 0.5rem;
+}
+
+.aspect-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.aspect-buttons button {
   background: var(--color-primary, #6c5ce7);
   color: white;
   border: none;
   border-radius: 4px;
-  padding: 2px 6px;
+  padding: 4px 8px;
   font-size: 0.9rem;
   cursor: pointer;
 }
 
-.aspect-block button:hover {
+.aspect-buttons button:hover {
   background: var(--color-primary-light, #a29bfe);
 }
 
-/* Textarea resizing */
-.aspect-block textarea {
-  width: 100%;
-  min-height: 2em;
+/* Bonus dice section */
+.bonus-dice-section {
+  display: flex;
+  gap: 2rem;
+  margin: 1rem 0;
+  padding: 1rem;
+  background: rgba(255,255,255,0.05);
+  border-radius: 6px;
 }
 
-/* Bonus dice buttons */
-.bonus-item button {
+.item-dice-group {
+  flex: 2;
+}
+
+.rule-of-cool-group {
+  flex: 1;
+  text-align: center;
+}
+
+.item-dice-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.item-dice-row input[type="text"] {
+  flex: 1;
+  min-width: 100px;
+}
+
+.item-dice-row select {
+  width: 60px;
+}
+
+.item-dice-row button,
+.rule-of-cool-group button {
   background: var(--color-primary, #0984e3);
   color: white;
   border: none;
   border-radius: 4px;
-  padding: 2px 6px;
-  font-size: 0.9rem;
+  padding: 4px 12px;
   cursor: pointer;
 }
 
-.bonus-item button:hover {
+.item-dice-row button:hover,
+.rule-of-cool-group button:hover {
   background: var(--color-primary-light, #74b9ff);
+}
+
+.rule-of-cool-group h4 {
+  margin-bottom: 0.5rem;
+}
+
+/* Items section */
+.items-section {
+  margin: 1rem 0;
+}
+
+.item-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.item-row input[type="text"] {
+  flex: 1;
+}
+
+.qty-input {
+  width: 60px;
+  text-align: center;
+}
+
+/* Notes section */
+.notes-section {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0;
+  align-items: flex-start;
+}
+
+.notes-label {
+  flex: 0 0 150px;
+}
+
+.notes-label label {
+  font-weight: bold;
+}
+
+.notes-area {
+  flex: 1;
+}
+
+.notes-area textarea {
+  width: 100%;
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* General button styling */
+button {
+  font-family: inherit;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Form spacing */
+.form-group {
+  margin-bottom: 0.75rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.25rem;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.1);
+  color: inherit;
+  border-radius: 3px;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--color-primary, #6c5ce7);
+  box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.2);
 }

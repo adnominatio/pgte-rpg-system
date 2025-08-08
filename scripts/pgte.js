@@ -10,13 +10,17 @@ Handlebars.registerHelper("subtract", function(a, b) {
   return a - b;
 });
 
+Handlebars.registerHelper("eq", function(a, b) {
+  return a === b;
+});
+
 class PGTEActorSheet extends ActorSheet {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ["pgte-rpg-system", "sheet", "actor"],
       template: "systems/pgte-rpg-system/templates/actor-sheet.html",
-      width: 700,
-      height: 800,
+      width: 800,
+      height: 900,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".tab-content", initial: "stats" }]
     });
   }
@@ -25,23 +29,67 @@ class PGTEActorSheet extends ActorSheet {
     const context = await super.getData();
     context.system = context.actor.system || {};
 
+    // Initialize stats with proper structure
     if (!context.system.stats) {
       context.system.stats = {
-        sorcery: { value: "d4", label: "SORCERY", uses: "magical ability, arcane knowledge" },
+        sorcery: { value: "d4", label: "SORCERY", uses: "magical ability, arcane knowledge, bindings, rituals" },
         lies: { value: "d4", label: "LIES", uses: "stealth, flattery, charisma, deception" },
-        violence: { value: "d4", label: "VIOLENCE", uses: "combat, hitting, physical threats" },
+        violence: { value: "d4", label: "VIOLENCE", uses: "combat, weapons, physical threats" },
         body: { value: "d4", label: "BODY", uses: "endurance, agility, strength" },
-        mind: { value: "d4", label: "MIND", uses: "knowledge, quick-thinking, investigation" },
-        heart: { value: "d4", label: "HEART", uses: "insight, foresight, people skills" }
+        mind: { value: "d4", label: "MIND", uses: "knowledge, investigation, quick-thinking" },
+        heart: { value: "d4", label: "HEART", uses: "insight, foresight, people skills, Story-awareness and Namelore" }
       };
     } else {
       const stats = context.system.stats;
-      stats.sorcery.label = "SORCERY"; stats.sorcery.uses = "magical ability, arcane knowledge";
+      stats.sorcery.label = "SORCERY"; stats.sorcery.uses = "magical ability, arcane knowledge, bindings, rituals";
       stats.lies.label = "LIES"; stats.lies.uses = "stealth, flattery, charisma, deception";
-      stats.violence.label = "VIOLENCE"; stats.violence.uses = "combat, hitting, physical threats";
+      stats.violence.label = "VIOLENCE"; stats.violence.uses = "combat, weapons, physical threats";
       stats.body.label = "BODY"; stats.body.uses = "endurance, agility, strength";
-      stats.mind.label = "MIND"; stats.mind.uses = "knowledge, quick-thinking, investigation";
-      stats.heart.label = "HEART"; stats.heart.uses = "insight, foresight, people skills";
+      stats.mind.label = "MIND"; stats.mind.uses = "knowledge, investigation, quick-thinking";
+      stats.heart.label = "HEART"; stats.heart.uses = "insight, foresight, people skills, Story-awareness and Namelore";
+    }
+
+    // Initialize resources
+    if (!context.system.resources) {
+      context.system.resources = {
+        storyDie: { value: "d4" },
+        hits: { value: 3, max: 3 },
+        storyTokens: { value: 0 }
+      };
+    }
+
+    // Initialize aspects
+    if (!context.system.aspects) {
+      context.system.aspects = {
+        aspect1: { name: "", nature: "", passive: "", active: "", firstUse: true },
+        aspect2: { name: "", nature: "", passive: "", active: "", firstUse: true },
+        aspect3: { name: "", nature: "", passive: "", active: "", firstUse: true }
+      };
+    }
+
+    // Initialize bonus dice
+    if (!context.system.bonusDice) {
+      context.system.bonusDice = {
+        item1: { name: "", die: "" },
+        item2: { name: "", die: "" },
+        item3: { name: "", die: "" }
+      };
+    }
+
+    // Initialize equipment
+    if (!context.system.equipment) {
+      context.system.equipment = {
+        item1: { name: "", quantity: 0 },
+        item2: { name: "", quantity: 0 },
+        item3: { name: "", quantity: 0 }
+      };
+    }
+
+    // Initialize notes
+    if (!context.system.notes) {
+      context.system.notes = {
+        patternOfThree: ""
+      };
     }
 
     return context;
@@ -55,26 +103,66 @@ class PGTEActorSheet extends ActorSheet {
     html.find('.roll-aspect').click(this._onRollAspect.bind(this));
     html.find('.roll-story-die').click(this._onRollStoryDie.bind(this));
     html.find('.roll-extra').click(this._onRollExtra.bind(this));
-    html.find('.roll-story').click(this._onRollStory.bind(this));
+    html.find('.roll-item').click(this._onRollItem.bind(this));
 
-    // Toggle Hits
+    // Hits toggles
+    html.find('.hits-up').click(ev => {
+      ev.preventDefault();
+      const current = this.actor.system.resources.hits.value || 0;
+      const max = this.actor.system.resources.hits.max || 6;
+      if (current < max) {
+        this.actor.update({ "system.resources.hits.value": current + 1 });
+      }
+    });
+
+    html.find('.hits-down').click(ev => {
+      ev.preventDefault();
+      const current = this.actor.system.resources.hits.value || 0;
+      if (current > 0) {
+        this.actor.update({ "system.resources.hits.value": current - 1 });
+      }
+    });
+
+    // Story tokens toggles
+    html.find('.tokens-up').click(ev => {
+      ev.preventDefault();
+      const current = this.actor.system.resources.storyTokens.value || 0;
+      this.actor.update({ "system.resources.storyTokens.value": current + 1 });
+    });
+
+    html.find('.tokens-down').click(ev => {
+      ev.preventDefault();
+      const current = this.actor.system.resources.storyTokens.value || 0;
+      if (current > 0) {
+        this.actor.update({ "system.resources.storyTokens.value": current - 1 });
+      }
+    });
+
+    // Item quantity toggles
+    html.find('.item-qty-up').click(ev => {
+      ev.preventDefault();
+      const item = ev.currentTarget.dataset.item;
+      const current = this.actor.system.equipment[item].quantity || 0;
+      this.actor.update({ [`system.equipment.${item}.quantity`]: current + 1 });
+    });
+
+    html.find('.item-qty-down').click(ev => {
+      ev.preventDefault();
+      const item = ev.currentTarget.dataset.item;
+      const current = this.actor.system.equipment[item].quantity || 0;
+      if (current > 0) {
+        this.actor.update({ [`system.equipment.${item}.quantity`]: current - 1 });
+      }
+    });
+
+    // Hit markers (for visual clicking)
     html.find('.hit-marker').click(ev => {
       ev.preventDefault();
       const current = this.actor.system.resources.hits.value || 0;
-      const index = Number(ev.currentTarget.dataset.index);
+      const index = Array.from(ev.currentTarget.parentNode.children).indexOf(ev.currentTarget);
       let newValue = index + 1;
       if (newValue === current) newValue--; // allow decrement
       this.actor.update({ "system.resources.hits.value": newValue });
-    });
-
-    // Toggle Story Tokens
-    html.find('.token-marker').click(ev => {
-      ev.preventDefault();
-      const current = this.actor.system.resources.storyTokens.value || 0;
-      const index = Number(ev.currentTarget.dataset.index);
-      let newValue = index + 1;
-      if (newValue === current) newValue--;
-      this.actor.update({ "system.resources.storyTokens.value": newValue });
     });
   }
 
@@ -114,17 +202,21 @@ class PGTEActorSheet extends ActorSheet {
     const roll = await new Roll(`1${die}`).roll({ async: true });
     roll.toMessage({
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-      flavor: `Extra ${die} Roll`
+      flavor: `Rule of Cool: ${die}`
     });
   }
 
-  async _onRollStory(event) {
+  async _onRollItem(event) {
     event.preventDefault();
-    const die = this.actor.system.resources.storyDie.value || "d4";
+    const { die, name = "Item" } = event.currentTarget.dataset;
+    if (!die) {
+      ui.notifications.warn("No die selected for this item!");
+      return;
+    }
     const roll = await new Roll(`1${die}`).roll({ async: true });
     roll.toMessage({
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-      flavor: `Pattern of Three: Story Die`
+      flavor: `${name}: ${die}`
     });
   }
 }

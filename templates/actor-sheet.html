@@ -1,208 +1,269 @@
 <form class="{{cssClass}} flexcol" autocomplete="off">
   <header class="sheet-header">
-    <h1>{{actor.name}}</h1>
+    <h1 class="character-title">{{actor.name}}</h1>
     
     <div class="character-info">
       <div class="form-group">
-        <label>Character Name:</label>
+        <label>Personal Name:</label>
         <input name="system.details.characterName" type="text" value="{{system.details.characterName}}" placeholder="Character Name"/>
       </div>
       
       <div class="form-group">
-        <label>Name:</label>
-        <input name="system.details.name" type="text" value="{{system.details.name}}" placeholder="True Name"/>
-      </div>
-      
-      <div class="form-group">
         <label>Story Archetype:</label>
-        <input name="system.details.archetype" type="text" value="{{system.details.archetype}}" placeholder="e.g., The Ambitious Squire"/>
+        <input name="system.details.archetype" type="text" value="{{system.details.archetype}}" placeholder="Ambitious nobleman with delusions of grandeur"/>
       </div>
       
-      <div class="form-group">
-        <label>Praesi Virtues:</label>
-        <input name="system.details.praesiVirtues" type="text" value="{{system.details.praesiVirtues}}" placeholder="Virtues"/>
-      </div>
-      
-      <div class="form-group">
-        <label>Major Flaws:</label>
-        <input name="system.details.majorFlaws" type="text" value="{{system.details.majorFlaws}}" placeholder="Major Flaws"/>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Praesi Virtues:</label>
+          <input name="system.details.praesiVirtues" type="text" value="{{system.details.praesiVirtues}}" placeholder="Virtues"/>
+        </div>
+        
+        <div class="form-group">
+          <label>Major Flaws:</label>
+          <input name="system.details.majorFlaws" type="text" value="{{system.details.majorFlaws}}" placeholder="Major Flaws"/>
+        </div>
       </div>
     </div>
   </header>
 
   <div class="sheet-body">
-    <div class="tab-container">
-      <nav class="sheet-tabs tabs" data-group="primary">
-        <a class="item active" data-tab="stats">Stats & Aspects</a>
-        <a class="item" data-tab="equipment">Equipment</a>
-        <a class="item" data-tab="biography">Biography</a>
-      </nav>
-
-      <div class="tab-content">
-        <div class="tab stats active" data-group="primary" data-tab="stats">
-          
-          <!-- Stats Table -->
-          <div class="stats-section">
-            <h3>Stats</h3>
-            <table class="stats-table">
-              <thead>
-                <tr>
-                  <th>Stat</th>
-                  <th>Uses</th>
-                  <th>Die</th>
-                  <th>Roll</th>
-                </tr>
-              </thead>
-              <tbody>
-                {{#each system.stats as |stat key|}}
-                <tr>
-                  <td class="stat-name">{{stat.label}}</td>
-                  <td class="stat-uses">{{stat.uses}}</td>
-                  <td class="stat-die">
-                    <select name="system.stats.{{key}}.value">
-                      <option value="d4" {{#if (eq stat.value "d4")}}selected{{/if}}>d4</option>
-                      <option value="d6" {{#if (eq stat.value "d6")}}selected{{/if}}>d6</option>
-                      <option value="d8" {{#if (eq stat.value "d8")}}selected{{/if}}>d8</option>
-                      <option value="d10" {{#if (eq stat.value "d10")}}selected{{/if}}>d10</option>
-                      <option value="d12" {{#if (eq stat.value "d12")}}selected{{/if}}>d12</option>
-                      <option value="d20" {{#if (eq stat.value "d20")}}selected{{/if}}>d20</option>
-                    </select>
-                  </td>
-                  <td class="stat-roll">
-                    <button type="button" class="roll-stat" data-stat="{{key}}" data-die="{{stat.value}}">Roll {{stat.value}}</button>
-                  </td>
-                </tr>
-                {{/each}}
-              </tbody>
-            </table>
-          </div>
-
-          <!-- Story Die and Resources -->
-          <div class="resources-section">
-            <h3>Story Die & Resources</h3>
-            
-            <div class="story-die-section">
-              <label>Story Die:</label>
-              <select name="system.resources.storyDie.value">
-                <option value="d4" {{#if (eq system.resources.storyDie.value "d4")}}selected{{/if}}>d4</option>
-                <option value="d6" {{#if (eq system.resources.storyDie.value "d6")}}selected{{/if}}>d6</option>
-                <option value="d8" {{#if (eq system.resources.storyDie.value "d8")}}selected{{/if}}>d8</option>
-                <option value="d10" {{#if (eq system.resources.storyDie.value "d10")}}selected{{/if}}>d10</option>
-                <option value="d12" {{#if (eq system.resources.storyDie.value "d12")}}selected{{/if}}>d12</option>
-                <option value="d20" {{#if (eq system.resources.storyDie.value "d20")}}selected{{/if}}>d20</option>
+    <!-- Stats Table -->
+    <div class="stats-section">
+      <h3>Stats</h3>
+      <table class="stats-table">
+        <thead>
+          <tr>
+            <th>Stat</th>
+            <th>Uses</th>
+            <th>Die</th>
+            <th>Roll</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each system.stats as |stat key|}}
+          <tr>
+            <td class="stat-name">{{stat.label}}</td>
+            <td class="stat-uses">{{stat.uses}}</td>
+            <td class="stat-die">
+              <select name="system.stats.{{key}}.value">
+                <option value="d4" {{#if (eq stat.value "d4")}}selected{{/if}}>d4</option>
+                <option value="d6" {{#if (eq stat.value "d6")}}selected{{/if}}>d6</option>
+                <option value="d8" {{#if (eq stat.value "d8")}}selected{{/if}}>d8</option>
+                <option value="d10" {{#if (eq stat.value "d10")}}selected{{/if}}>d10</option>
+                <option value="d12" {{#if (eq stat.value "d12")}}selected{{/if}}>d12</option>
+                <option value="d20" {{#if (eq stat.value "d20")}}selected{{/if}}>d20</option>
               </select>
-              <button type="button" class="roll-story-die" data-die="{{system.resources.storyDie.value}}">Roll Story Die</button>
-            </div>
-            
-            <div class="hits-section">
-              <label>Hits:</label>
-              <input name="system.resources.hits.value" type="number" value="{{system.resources.hits.value}}" min="0" max="6"/>
-              <span class="hits-display">
-                {{#times system.resources.hits.value}}
-                  <span class="hit-marker">●</span>
-                {{/times}}
-                {{#times (subtract 6 system.resources.hits.value)}}
-                  <span class="hit-marker empty">○</span>
-                {{/times}}
-              </span>
-            </div>
-            
-            <div class="story-tokens-section">
-              <label>Story Tokens:</label>
-              <input name="system.resources.storyTokens.value" type="number" value="{{system.resources.storyTokens.value}}" min="0"/>
-            </div>
-          </div>
+            </td>
+            <td class="stat-roll">
+              <button type="button" class="roll-stat" data-stat="{{key}}" data-die="{{stat.value}}">Roll {{stat.value}}</button>
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
 
-          <!-- Aspects -->
-          <div class="aspects-section">
-            <h3>Aspects</h3>
-            <p><em>Choose 2 at start, gain 3rd through play</em></p>
-            
-            {{#each system.aspects as |aspect key|}}
-            <div class="aspect-block">
-              <div class="aspect-header">
-                <label>{{#if (eq key "aspect1")}}1st{{else if (eq key "aspect2")}}2nd{{else}}3rd{{/if}} Aspect:</label>
-                <input name="system.aspects.{{key}}.name" type="text" value="{{aspect.name}}" placeholder="Aspect Name"/>
-              </div>
-              
-              <div class="aspect-details">
-                <div class="form-group">
-                  <label>Nature:</label>
-                  <textarea name="system.aspects.{{key}}.nature" rows="2" style="resize: vertical;" placeholder="Its groove in the story">{{aspect.nature}}</textarea>
-                </div>
-                
-                <div class="form-group">
-                  <label>Passive:</label>
-                  <button type="button" class="roll-aspect" 
-                          data-die="{{#if (eq key 'aspect3')}}d4{{else}}d4{{/if}}" 
-                          data-type="Passive" data-name="{{aspect.name}}">
-                    +D4
-                  </button>
-                </div>
-                
-                <div class="form-group">
-                  <label>Active:</label>
-                  <button type="button" class="roll-aspect" 
-                          data-die="{{#if (eq key 'aspect3')}}d20{{else}}d12{{/if}}" 
-                          data-type="Active" data-name="{{aspect.name}}">
-                    {{#if (eq key 'aspect3')}}+D20{{else}}+D12{{/if}}
-                  </button>
-                </div>
-              </div>
-            </div>
-            {{/each}}
+    <!-- Resources Row -->
+    <div class="resources-row">
+      <div class="resource-group">
+        <label>Hits (Base <input name="system.resources.hits.max" type="number" value="{{system.resources.hits.max}}" min="1" max="10" class="base-hits"/>)</label>
+        <div class="hits-control">
+          <input name="system.resources.hits.value" type="number" value="{{system.resources.hits.value}}" min="0" max="{{system.resources.hits.max}}" class="hits-input"/>
+          <div class="toggle-buttons">
+            <button type="button" class="hits-up">▲</button>
+            <button type="button" class="hits-down">▼</button>
           </div>
+          <div class="hits-display">
+            {{#times system.resources.hits.value}}
+              <span class="hit-marker filled">●</span>
+            {{/times}}
+            {{#times (subtract system.resources.hits.max system.resources.hits.value)}}
+              <span class="hit-marker empty">○</span>
+            {{/times}}
+          </div>
+        </div>
+      </div>
+      
+      <div class="resource-group">
+        <label>Story Tokens</label>
+        <div class="tokens-control">
+          <input name="system.resources.storyTokens.value" type="number" value="{{system.resources.storyTokens.value}}" min="0" class="tokens-input"/>
+          <div class="toggle-buttons">
+            <button type="button" class="tokens-up">▲</button>
+            <button type="button" class="tokens-down">▼</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="resource-group">
+        <label>Story Die ({{system.resources.storyDie.value}})</label>
+        <select name="system.resources.storyDie.value" class="story-die-select">
+          <option value="d4" {{#if (eq system.resources.storyDie.value "d4")}}selected{{/if}}>d4</option>
+          <option value="d6" {{#if (eq system.resources.storyDie.value "d6")}}selected{{/if}}>d6</option>
+          <option value="d8" {{#if (eq system.resources.storyDie.value "d8")}}selected{{/if}}>d8</option>
+          <option value="d10" {{#if (eq system.resources.storyDie.value "d10")}}selected{{/if}}>d10</option>
+          <option value="d12" {{#if (eq system.resources.storyDie.value "d12")}}selected{{/if}}>d12</option>
+          <option value="d20" {{#if (eq system.resources.storyDie.value "d20")}}selected{{/if}}>d20</option>
+        </select>
+        <button type="button" class="roll-story-die">Roll Story Die</button>
+      </div>
+    </div>
 
-          <!-- Bonus Dice -->
-          <div class="bonus-dice-section">
-            <h3>Bonus Dice</h3>
-            <div class="bonus-dice-grid">
-              <div class="bonus-item">
-                <label>Rule of Cool:</label>
-                <button type="button" class="roll-extra" data-die="d4">+D4</button>
+    <!-- Aspects in 3 columns -->
+    <div class="aspects-section">
+      <h3>Aspects</h3>
+      <p><em>Choose 2 at start, gain 3rd through play</em></p>
+      
+      <div class="aspects-grid">
+        <div class="aspect-column">
+          <div class="aspect-block">
+            <div class="aspect-header">
+              <label>1st Aspect:</label>
+              <input name="system.aspects.aspect1.name" type="text" value="{{system.aspects.aspect1.name}}" placeholder="Aspect Name"/>
+            </div>
+            <div class="aspect-details">
+              <div class="form-group">
+                <label>Nature:</label>
+                <textarea name="system.aspects.aspect1.nature" rows="2" placeholder="Its groove in the story">{{system.aspects.aspect1.nature}}</textarea>
               </div>
-              
-              <div class="bonus-item">
-                <label>Pattern of Three:</label>
-                <button type="button" class="roll-story">Roll Story Die</button>
-              </div>
-              
-              <div class="bonus-item">
-                <label>Item Die:</label>
-                <select name="system.bonusDice.itemDie">
-                  <option value="">—</option>
-                  <option value="d4" {{#if (eq system.bonusDice.itemDie "d4")}}selected{{/if}}>d4</option>
-                  <option value="d6" {{#if (eq system.bonusDice.itemDie "d6")}}selected{{/if}}>d6</option>
-                  <option value="d8" {{#if (eq system.bonusDice.itemDie "d8")}}selected{{/if}}>d8</option>
-                  <option value="d10" {{#if (eq system.bonusDice.itemDie "d10")}}selected{{/if}}>d10</option>
-                  <option value="d12" {{#if (eq system.bonusDice.itemDie "d12")}}selected{{/if}}>d12</option>
-                  <option value="d20" {{#if (eq system.bonusDice.itemDie "d20")}}selected{{/if}}>d20</option>
-                </select>
+              <div class="aspect-buttons">
+                <button type="button" class="roll-aspect" data-die="d4" data-type="Passive" data-name="{{system.aspects.aspect1.name}}">+D4 Passive</button>
+                <button type="button" class="roll-aspect" data-die="d12" data-type="Active" data-name="{{system.aspects.aspect1.name}}">+D12 Active</button>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="tab equipment" data-group="primary" data-tab="equipment">
-          <div class="items-section">
-            <h3>Equipment</h3>
-            <div class="items-list">
-              {{#each items as |item id|}}
-              <div class="item-entry">
-                <h4>{{item.name}}</h4>
-                <p>{{item.system.description}}</p>
+        <div class="aspect-column">
+          <div class="aspect-block">
+            <div class="aspect-header">
+              <label>2nd Aspect:</label>
+              <input name="system.aspects.aspect2.name" type="text" value="{{system.aspects.aspect2.name}}" placeholder="Aspect Name"/>
+            </div>
+            <div class="aspect-details">
+              <div class="form-group">
+                <label>Nature:</label>
+                <textarea name="system.aspects.aspect2.nature" rows="2" placeholder="Its groove in the story">{{system.aspects.aspect2.nature}}</textarea>
               </div>
-              {{/each}}
+              <div class="aspect-buttons">
+                <button type="button" class="roll-aspect" data-die="d4" data-type="Passive" data-name="{{system.aspects.aspect2.name}}">+D4 Passive</button>
+                <button type="button" class="roll-aspect" data-die="d12" data-type="Active" data-name="{{system.aspects.aspect2.name}}">+D12 Active</button>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="tab biography" data-group="primary" data-tab="biography">
-          <div class="biography-section">
-            <h3>Biography</h3>
-            <textarea name="system.biography" placeholder="Character backstory, motivations, etc.">{{system.biography}}</textarea>
+        <div class="aspect-column">
+          <div class="aspect-block">
+            <div class="aspect-header">
+              <label>3rd Aspect:</label>
+              <input name="system.aspects.aspect3.name" type="text" value="{{system.aspects.aspect3.name}}" placeholder="Aspect Name"/>
+            </div>
+            <div class="aspect-details">
+              <div class="form-group">
+                <label>Nature:</label>
+                <textarea name="system.aspects.aspect3.nature" rows="2" placeholder="Its groove in the story">{{system.aspects.aspect3.nature}}</textarea>
+              </div>
+              <div class="aspect-buttons">
+                <button type="button" class="roll-aspect" data-die="d4" data-type="Passive" data-name="{{system.aspects.aspect3.name}}">+D4 Passive</button>
+                <button type="button" class="roll-aspect" data-die="d20" data-type="Active" data-name="{{system.aspects.aspect3.name}}">+D20 Active</button>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- Item Dice and Rule of Cool -->
+    <div class="bonus-dice-section">
+      <div class="item-dice-group">
+        <h4>Item Dice</h4>
+        <div class="item-dice-row">
+          <input name="system.bonusDice.item1.name" type="text" value="{{system.bonusDice.item1.name}}" placeholder="Item"/>
+          <select name="system.bonusDice.item1.die">
+            <option value="">—</option>
+            <option value="d4" {{#if (eq system.bonusDice.item1.die "d4")}}selected{{/if}}>d4</option>
+            <option value="d6" {{#if (eq system.bonusDice.item1.die "d6")}}selected{{/if}}>d6</option>
+            <option value="d8" {{#if (eq system.bonusDice.item1.die "d8")}}selected{{/if}}>d8</option>
+            <option value="d10" {{#if (eq system.bonusDice.item1.die "d10")}}selected{{/if}}>d10</option>
+            <option value="d12" {{#if (eq system.bonusDice.item1.die "d12")}}selected{{/if}}>d12</option>
+            <option value="d20" {{#if (eq system.bonusDice.item1.die "d20")}}selected{{/if}}>d20</option>
+          </select>
+          <button type="button" class="roll-item" data-die="{{system.bonusDice.item1.die}}" data-name="{{system.bonusDice.item1.name}}">Roll</button>
+        </div>
+        <div class="item-dice-row">
+          <input name="system.bonusDice.item2.name" type="text" value="{{system.bonusDice.item2.name}}" placeholder="Item"/>
+          <select name="system.bonusDice.item2.die">
+            <option value="">—</option>
+            <option value="d4" {{#if (eq system.bonusDice.item2.die "d4")}}selected{{/if}}>d4</option>
+            <option value="d6" {{#if (eq system.bonusDice.item2.die "d6")}}selected{{/if}}>d6</option>
+            <option value="d8" {{#if (eq system.bonusDice.item2.die "d8")}}selected{{/if}}>d8</option>
+            <option value="d10" {{#if (eq system.bonusDice.item2.die "d10")}}selected{{/if}}>d10</option>
+            <option value="d12" {{#if (eq system.bonusDice.item2.die "d12")}}selected{{/if}}>d12</option>
+            <option value="d20" {{#if (eq system.bonusDice.item2.die "d20")}}selected{{/if}}>d20</option>
+          </select>
+          <button type="button" class="roll-item" data-die="{{system.bonusDice.item2.die}}" data-name="{{system.bonusDice.item2.name}}">Roll</button>
+        </div>
+        <div class="item-dice-row">
+          <input name="system.bonusDice.item3.name" type="text" value="{{system.bonusDice.item3.name}}" placeholder="Item"/>
+          <select name="system.bonusDice.item3.die">
+            <option value="">—</option>
+            <option value="d4" {{#if (eq system.bonusDice.item3.die "d4")}}selected{{/if}}>d4</option>
+            <option value="d6" {{#if (eq system.bonusDice.item3.die "d6")}}selected{{/if}}>d6</option>
+            <option value="d8" {{#if (eq system.bonusDice.item3.die "d8")}}selected{{/if}}>d8</option>
+            <option value="d10" {{#if (eq system.bonusDice.item3.die "d10")}}selected{{/if}}>d10</option>
+            <option value="d12" {{#if (eq system.bonusDice.item3.die "d12")}}selected{{/if}}>d12</option>
+            <option value="d20" {{#if (eq system.bonusDice.item3.die "d20")}}selected{{/if}}>d20</option>
+          </select>
+          <button type="button" class="roll-item" data-die="{{system.bonusDice.item3.die}}" data-name="{{system.bonusDice.item3.name}}">Roll</button>
+        </div>
+      </div>
+
+      <div class="rule-of-cool-group">
+        <h4>Rule of Cool</h4>
+        <button type="button" class="roll-extra" data-die="d4">Roll D4</button>
+      </div>
+    </div>
+
+    <!-- Items List -->
+    <div class="items-section">
+      <h3>Items</h3>
+      <div class="items-list">
+        <div class="item-row">
+          <input name="system.equipment.item1.name" type="text" value="{{system.equipment.item1.name}}" placeholder="Item Name"/>
+          <input name="system.equipment.item1.quantity" type="number" value="{{system.equipment.item1.quantity}}" min="0" class="qty-input"/>
+          <div class="toggle-buttons">
+            <button type="button" class="item-qty-up" data-item="item1">▲</button>
+            <button type="button" class="item-qty-down" data-item="item1">▼</button>
+          </div>
+        </div>
+        <div class="item-row">
+          <input name="system.equipment.item2.name" type="text" value="{{system.equipment.item2.name}}" placeholder="Item Name"/>
+          <input name="system.equipment.item2.quantity" type="number" value="{{system.equipment.item2.quantity}}" min="0" class="qty-input"/>
+          <div class="toggle-buttons">
+            <button type="button" class="item-qty-up" data-item="item2">▲</button>
+            <button type="button" class="item-qty-down" data-item="item2">▼</button>
+          </div>
+        </div>
+        <div class="item-row">
+          <input name="system.equipment.item3.name" type="text" value="{{system.equipment.item3.name}}" placeholder="Item Name"/>
+          <input name="system.equipment.item3.quantity" type="number" value="{{system.equipment.item3.quantity}}" min="0" class="qty-input"/>
+          <div class="toggle-buttons">
+            <button type="button" class="item-qty-up" data-item="item3">▲</button>
+            <button type="button" class="item-qty-down" data-item="item3">▼</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pattern of Three Notes -->
+    <div class="notes-section">
+      <div class="notes-label">
+        <label>Patterns of Three:</label>
+      </div>
+      <div class="notes-area">
+        <textarea name="system.notes.patternOfThree" rows="3" placeholder="Notes about patterns, recurring themes, or story elements...">{{system.notes.patternOfThree}}</textarea>
       </div>
     </div>
   </div>
