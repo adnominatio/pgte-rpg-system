@@ -15,9 +15,10 @@
 
 
 /* Ensure FontAwesome icons work */
-.fa, .fas, .far, .fab, .fal, .fad {
-  font-family: "Font Awesome 5 Free", "Font Awesome 5 Pro", "Font Awesome 5 Brands", "Font Awesome 5 Duotone" !important;
+.fa, .fa-solid, .fa-regular, .fa-brands {
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Pro", "Font Awesome 6 Brands" !important;
 }
+
 
 /* Character title styling */
 .character-title {
