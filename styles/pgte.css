@@ -19,19 +19,6 @@
   cursor: pointer;
 }
 
-.hit-marker, .token-marker {
-  cursor: pointer;
-  font-size: 1.2em;
-  padding: 0 2px;
-  color: #999;
-}
-.hit-marker.filled, .token-marker.filled {
-  color: #e74c3c;
-}
-.hit-marker:hover, .token-marker:hover {
-  color: #ff7675;
-}
-
 .aspect-block button:hover {
   background: var(--color-primary-light, #a29bfe);
 }
