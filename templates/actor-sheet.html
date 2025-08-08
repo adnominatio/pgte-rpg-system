@@ -94,24 +94,23 @@
               <button type="button" class="roll-story-die" data-die="{{system.resources.storyDie.value}}">Roll Story Die</button>
             </div>
             
-            <div class="hits-section">
-              <label>Hits:</label>
-              <input name="system.resources.hits.value" type="number" value="{{system.resources.hits.value}}" min="0" max="6"/>
-              <span class="hits-display">
-                {{#times system.resources.hits.value}}
-                  <span class="hit-marker">●</span>
-                {{/times}}
-                {{#times (subtract 6 system.resources.hits.value)}}
-                  <span class="hit-marker empty">○</span>
-                {{/times}}
-              </span>
-            </div>
-            
-            <div class="story-tokens-section">
-              <label>Story Tokens:</label>
-              <input name="system.resources.storyTokens.value" type="number" value="{{system.resources.storyTokens.value}}" min="0"/>
-            </div>
-          </div>
+			<div class="hits-section">
+			  <label>Hits:</label>
+			  <span class="hits-display">
+				{{#times 6}}
+				  <span class="hit-marker {{#if (lt @index system.resources.hits.value)}}filled{{/if}}" data-index="{{@index}}">●</span>
+				{{/times}}
+			  </span>
+			</div>
+
+			<div class="story-tokens-section">
+			  <label>Story Tokens:</label>
+			  <span class="tokens-display">
+				{{#times 6}}
+				  <span class="token-marker {{#if (lt @index system.resources.storyTokens.value)}}filled{{/if}}" data-index="{{@index}}">●</span>
+				{{/times}}
+			  </span>
+			</div>
 
           <!-- Aspects -->
           <div class="aspects-section">
