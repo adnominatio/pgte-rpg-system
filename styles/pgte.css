@@ -1,16 +1,22 @@
-/* Import core Foundry styles to ensure icon fonts work */
-@import url("../../ui/foundry.css");
-
 /* CSS Variables for easy color management */
 :root {
-  --placeholder-color: rgba(255, 255, 255, 0.7);
+  --placeholder-color: rgba(100, 100, 100, 0.7);
   --text-color: rgba(255, 255, 255, 1);
   --border-color: rgba(255, 255, 255, 0.2);
   --background-light: rgba(255, 255, 255, 0.05);
   --background-medium: rgba(255, 255, 255, 0.1);
-  --primary-color: #6c5ce7;
-  --primary-hover: #a29bfe;
+  --primary-color: #4E0707; /*wine*/
+  --primary-hover: #B90E0A; /*crimson*/
+  --roll-stat-name-hover: rgba(114, 47, 55, 0.2);
   --success-color: #27ae60;
+}
+
+  /* CSS Variables for easy color management */
+
+
+/* Ensure FontAwesome icons work */
+.fa, .fas, .far, .fab, .fal, .fad {
+  font-family: "Font Awesome 5 Free", "Font Awesome 5 Pro", "Font Awesome 5 Brands", "Font Awesome 5 Duotone" !important;
 }
 
 /* Character title styling */

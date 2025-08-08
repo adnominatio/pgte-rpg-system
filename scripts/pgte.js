@@ -36,7 +36,7 @@ Hooks.once("ready", function() {
 
 class PGTEActorSheet extends ActorSheet {
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["pgte-rpg-system", "sheet", "actor"],
       template: "systems/pgte-rpg-system/templates/actor-sheet.html",
       width: 800,
@@ -190,7 +190,7 @@ class PGTEActorSheet extends ActorSheet {
   async _onRollStat(event) {
     event.preventDefault();
     const { stat, die } = event.currentTarget.dataset;
-    const roll = await new Roll(`1${die}`).roll({ async: true });
+    const roll = await new Roll(`1${die}`).evaluate();
     roll.toMessage({
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
       flavor: `Rolling ${stat}: ${die}`
@@ -200,7 +200,7 @@ class PGTEActorSheet extends ActorSheet {
   async _onRollStatName(event) {
     event.preventDefault();
     const { stat, die } = event.currentTarget.dataset;
-    const roll = await new Roll(`1${die}`).roll({ async: true });
+    const roll = await new Roll(`1${die}`).evaluate();
     roll.toMessage({
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
       flavor: `Rolling ${stat}: ${die}`
@@ -210,7 +210,7 @@ class PGTEActorSheet extends ActorSheet {
   async _onRollAspect(event) {
     event.preventDefault();
     const { die, type, name = "Aspect" } = event.currentTarget.dataset;
-    const roll = await new Roll(`1${die}`).roll({ async: true });
+    const roll = await new Roll(`1${die}`).evaluate();
     roll.toMessage({
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
       flavor: `<b>${name}</b> (${type})`
@@ -220,7 +220,7 @@ class PGTEActorSheet extends ActorSheet {
   async _onRollStoryDie(event) {
     event.preventDefault();
     const die = this.actor.system.resources.storyDie.value || "d4";
-    const roll = await new Roll(`1${die}`).roll({ async: true });
+    const roll = await new Roll(`1${die}`).evaluate();
     roll.toMessage({
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
       flavor: `Rolling Story Die: ${die}`
@@ -230,7 +230,7 @@ class PGTEActorSheet extends ActorSheet {
   async _onRollExtra(event) {
     event.preventDefault();
     const die = event.currentTarget.dataset.die;
-    const roll = await new Roll(`1${die}`).roll({ async: true });
+    const roll = await new Roll(`1${die}`).evaluate();
     roll.toMessage({
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
       flavor: `Rule of Cool: ${die}`
@@ -244,7 +244,7 @@ class PGTEActorSheet extends ActorSheet {
       ui.notifications.warn("No die selected for this item!");
       return;
     }
-    const roll = await new Roll(`1${die}`).roll({ async: true });
+    const roll = await new Roll(`1${die}`).evaluate();
     roll.toMessage({
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
       flavor: `${name}: ${die}`
