@@ -190,6 +190,16 @@ textarea::placeholder {
   gap: 0.5rem;
 }
 
+.tokens-input {
+  width: 60px;
+  text-align: center;
+  order: 2; /* Put input after buttons */
+}
+
+.tokens-control .toggle-buttons {
+  order: 1; /* Put buttons first */
+}
+
 .tokens-display {
   font-size: 1.2em;
   font-weight: bold;
@@ -210,16 +220,18 @@ textarea::placeholder {
 
 /* Roll Story Die button hover effect */
 .roll-story-die {
-  background: var(--background-medium);
+  background: var(--color-primary-light);
   border: 1px solid var(--border-color);
+  color: white;
   padding: 0.5rem;
   border-radius: 4px;
+  padding: 4px 8px;
   transition: all 0.2s;
   cursor: pointer;
 }
 
 .roll-story-die:hover {
-  background: var(--roll-stat-name-hover);
+  background: var(--color-primary-light-hover);
   border-color: var(--roll-stat-name-hover);
 }
 
@@ -312,9 +324,27 @@ textarea::placeholder {
   margin-bottom: 0.5rem;
 }
 
+/*
 .item-dice-row input[type="text"] {
   flex: 1;
   min-width: 100px;
+} */
+
+.item-dice-row input[type="text"] {
+  flex: 4; /* Even bigger for item names */
+  min-width: 180px;
+}
+
+.item-dice-row select {
+  width: 50px; /* Slightly smaller die selector */
+  flex-shrink: 0;
+}
+
+.item-dice-row button {
+  padding: 2px 6px; /* Much smaller roll buttons */
+  font-size: 0.8rem;
+  flex-shrink: 0;
+  min-width: 40px;
 }
 
 .item-dice-row select {
@@ -345,17 +375,14 @@ textarea::placeholder {
   margin-bottom: 0.5rem;
 }
 
-.item-dice-row input[type="text"] {
-  flex: 3; /* Bigger item name box */
-  min-width: 150px;
-}
+
 
 .item-dice-row select {
   width: 60px; /* Keep die selector same size */
 }
 
 .item-dice-row button {
-  padding: 4px 8px; /* Smaller roll button */
+  padding: 4px 6px; /* Smaller roll button */
   flex-shrink: 0;
 }
 
