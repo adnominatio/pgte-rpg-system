@@ -233,7 +233,7 @@ textarea::placeholder {
 }
 
 /* Roll Story Die button hover effect */
-.roll-story-die {
+.roll-story-die rule 
   background: var(--color-primary-light);
   border: 1px solid var(--border-color);
   color: white;
@@ -346,7 +346,7 @@ textarea::placeholder {
 
 .item-dice-row input[type="text"] {
   flex: 4; /* Even bigger for item names */
-  min-width: 180px;
+  min-width: 220px;
 }
 
 .item-dice-row select {
@@ -358,7 +358,7 @@ textarea::placeholder {
   padding: 2px 6px; /* Much smaller roll buttons */
   font-size: 0.8rem;
   flex-shrink: 0;
-  min-width: 40px;
+  max-width: 100px;
 }
 
 .item-dice-row select {
@@ -379,7 +379,7 @@ textarea::placeholder {
 .rule-of-cool-group button {
   display: block;
   width: 100%;
-  max-width: 120px; /* matches Aspect button width */
+  max-width: 100px; 
   margin: 0 auto;
 }
 
