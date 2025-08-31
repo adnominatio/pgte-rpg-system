@@ -269,9 +269,10 @@ textarea::placeholder {
   margin-top: 1rem;
 }
 
+/*
 .aspects-section {
   padding-left: 1rem;
-}
+}*/
 
 .aspect-column {
   flex: 1;
