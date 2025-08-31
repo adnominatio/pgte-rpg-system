@@ -208,6 +208,22 @@ textarea::placeholder {
   width: auto;
 }
 
+/* Roll Story Die button hover effect */
+.roll-story-die {
+  background: var(--background-medium);
+  border: 1px solid var(--border-color);
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.roll-story-die:hover {
+  background: var(--roll-stat-name-hover);
+  border-color: var(--roll-stat-name-hover);
+}
+
+
 /* Aspects grid layout */
 .aspects-grid {
   display: grid;
@@ -311,7 +327,7 @@ textarea::placeholder {
   color: white;
   border: none;
   border-radius: 4px;
-  padding: 4px 12px;
+  padding: 4px 8px;  /* smaller than before */
   cursor: pointer;
 }
 
@@ -323,6 +339,26 @@ textarea::placeholder {
 .rule-of-cool-group h4 {
   margin-bottom: 0.5rem;
 }
+
+/* Magical Items section adjustments */
+.item-dice-group h4 {
+  margin-bottom: 0.5rem;
+}
+
+.item-dice-row input[type="text"] {
+  flex: 3; /* Bigger item name box */
+  min-width: 150px;
+}
+
+.item-dice-row select {
+  width: 60px; /* Keep die selector same size */
+}
+
+.item-dice-row button {
+  padding: 4px 8px; /* Smaller roll button */
+  flex-shrink: 0;
+}
+
 
 /* Items section */
 .items-section {

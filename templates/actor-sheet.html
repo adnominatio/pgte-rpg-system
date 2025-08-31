@@ -88,7 +88,7 @@
 			  <button type="button" class="tokens-up">▲</button>
 			  <button type="button" class="tokens-down">▼</button>
 			</div>
-			<div class="tokens-display">{{system.resources.storyTokens.value}}</div>
+			<input name="system.resources.storyTokens.value" type="number" value="{{system.resources.storyTokens.value}}" min="0" class="tokens-input"/>
 		  </div>
 		</div>
 			  
@@ -173,10 +173,10 @@
       </div>
     </div>
 
-    <!-- Item Dice and Rule of Cool -->
+    <!-- Magical Item Dice and Rule of Cool -->
     <div class="bonus-dice-section">
       <div class="item-dice-group">
-        <h4>Item Dice</h4>
+        <h4>Magical Items</h4>
         <div class="item-dice-row">
           <input name="system.bonusDice.item1.name" type="text" value="{{system.bonusDice.item1.name}}" placeholder="Item"/>
           <select name="system.bonusDice.item1.die">
