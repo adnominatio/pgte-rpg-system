@@ -417,6 +417,7 @@ textarea::placeholder {
 /* Items section */
 .items-section {
   margin: 1rem 0;
+  padding-left: 1rem;
 }
 
 .item-row {
@@ -440,6 +441,7 @@ textarea::placeholder {
   display: flex;
   gap: 1rem;
   margin: 1rem 0;
+  padding-left: 1rem;
   align-items: flex-start;
 }
 
