@@ -30,6 +30,9 @@
   font-size: 2.2em;
   margin: 0.5rem 0 1rem 0;
   font-weight: bold;
+  max-width: 400px; 
+  margin-left: auto; 
+  margin-right: auto; 
 }
 
 /* Form layout improvements */
@@ -58,6 +61,14 @@
   margin-bottom: 0.25rem;
 }
 
+/* make these sections wider */
+input[name="system.details.characterName"] {
+  max-width: 500px;
+}
+
+input[name="system.details.archetype"] {
+  max-width: 500px;
+}
 
 
 /* Better placeholder text - using variable */
@@ -256,6 +267,10 @@ textarea::placeholder {
   grid-template-columns: 1fr 1fr 1fr;
   gap: 1rem;
   margin-top: 1rem;
+}
+
+.aspects-section {
+  padding-left: 1rem;
 }
 
 .aspect-column {
