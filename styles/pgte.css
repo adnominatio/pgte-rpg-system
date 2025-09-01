@@ -64,12 +64,12 @@
 /* make these sections wider */
 input[name="system.details.characterName"] {
   max-width: 500px;
-  min-width: 100px;
+  min-width: 200px;
 }
 
-input[name="system.details.archetype"] {
+textarea[name="system.details.archetype"] {
   max-width: 500px;
-  min-width: 100px;
+  min-width: 200px;
 }
 
 
