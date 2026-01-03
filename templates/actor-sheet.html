@@ -61,18 +61,21 @@
     <!-- Resources Row -->
     <div class="resources-row">
       <div class="resource-group">
-        <div class="hits-section">
-          <label>Base Hits: <input name="system.resources.hits.max" type="number" value="{{system.resources.hits.max}}" min="1" max="10" class="base-hits"/></label>
+        <h4>Hits <span style="opacity: var(--hits-physical-opacity, 0.3);">(Physical)</span></h4>
+        <div class="hits-section" style="opacity: var(--hits-physical-opacity, 0.3);">
+          <div class="hits-label-row">
+            <label>Max: <input name="system.resources.hits.physical.max" type="number" value="{{system.resources.hits.physical.max}}" min="1" max="10" class="base-hits"/></label>
+          </div>
           <div class="hits-control">
             <div class="toggle-buttons">
-              <button type="button" class="hits-up">▲</button>
-              <button type="button" class="hits-down">▼</button>
+              <button type="button" class="hits-up" data-type="physical">▲</button>
+              <button type="button" class="hits-down" data-type="physical">▼</button>
             </div>
             <div class="hits-display">
-              {{#times system.resources.hits.value}}
+              {{#times system.resources.hits.physical.value}}
                 <span class="hit-marker filled">●</span>
               {{/times}}
-              {{#times (subtract system.resources.hits.max system.resources.hits.value)}}
+              {{#times (subtract system.resources.hits.physical.max system.resources.hits.physical.value)}}
                 <span class="hit-marker empty">○</span>
               {{/times}}
             </div>
@@ -80,19 +83,44 @@
         </div>
       </div>
       
-		<div class="resource-group">
-		  <label>Story Tokens</label>
-		  <div class="hits-control">
-			<div class="toggle-buttons">
-			  <button type="button" class="tokens-up">▲</button>
-			  <button type="button" class="tokens-down">▼</button>
-			</div>
-			<input name="system.resources.storyTokens.value" type="number" value="{{system.resources.storyTokens.value}}" min="0" class="tokens-input" placeholder="0"/>
-		  </div>
-		</div>
-			  
       <div class="resource-group">
-        <label>Story Die</label>
+        <h4>Hits <span style="opacity: var(--hits-mental-opacity, 0);">(Mental)</span></h4>
+        <div class="hits-section" style="opacity: var(--hits-mental-opacity, 0);">
+          <div class="hits-label-row">
+            <label>Max: <input name="system.resources.hits.mental.max" type="number" value="{{system.resources.hits.mental.max}}" min="1" max="10" class="base-hits"/></label>
+          </div>
+          <div class="hits-control">
+            <div class="toggle-buttons">
+              <button type="button" class="hits-up" data-type="mental">▲</button>
+              <button type="button" class="hits-down" data-type="mental">▼</button>
+            </div>
+            <div class="hits-display">
+              {{#times system.resources.hits.mental.value}}
+                <span class="hit-marker filled">●</span>
+              {{/times}}
+              {{#times (subtract system.resources.hits.mental.max system.resources.hits.mental.value)}}
+                <span class="hit-marker empty">○</span>
+              {{/times}}
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="resource-group">
+        <h4>Story Tokens</h4>
+        <div class="tokens-section">
+          <div class="tokens-control">
+            <div class="toggle-buttons">
+              <button type="button" class="tokens-up">▲</button>
+              <button type="button" class="tokens-down">▼</button>
+            </div>
+            <input name="system.resources.storyTokens.value" type="number" value="{{system.resources.storyTokens.value}}" min="0" class="tokens-input" placeholder="0"/>
+          </div>
+        </div>
+      </div>
+      
+      <div class="resource-group">
+        <h4>Story Die</h4>
         <div class="story-die-control">
           <select name="system.resources.storyDie.value" class="story-die-select">
             <option value="d4" {{#if (eq system.resources.storyDie.value "d4")}}selected{{/if}}>d4</option>

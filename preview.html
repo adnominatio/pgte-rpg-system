@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PGTE Character Sheet Preview</title>
+  <style>
+    :root {
+      --placeholder-color: rgba(100, 100, 100, 0.7);
+      --text-color: rgba(255, 255, 255, 1);
+      --border-color: rgba(255, 255, 255, 0.2);
+      --background-light: rgba(255, 255, 255, 0.05);
+      --background-medium: rgba(255, 255, 255, 0.1);
+      --color-primary: #4E0707;
+      --hover-primary: #B90E0A;
+      --roll-stat-name: rgba(114, 47, 55);
+      --roll-stat-name-hover: rgba(114, 47, 55, 0.2);
+      --success-color: #27ae60;
+      --color-primary-light: #710C04;
+      --color-primary-light-hover: #B90E0A;
+      --box-shadow: rgba(108, 92, 231, 0.2);
+    }
+    
+    body {
+      background: #1a1a1a;
+      color: #ffffff;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      padding: 2rem;
+      margin: 0;
+    }
+    
+    .preview-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .preview-header {
+      text-align: center;
+      margin-bottom: 2rem;
+      border-bottom: 2px solid rgba(255,255,255,0.2);
+      padding-bottom: 1rem;
+    }
+    
+    .preview-header h1 {
+      margin: 0 0 0.5rem 0;
+    }
+    
+    .preview-header p {
+      margin: 0;
+      color: rgba(255,255,255,0.6);
+      font-size: 0.9rem;
+    }
+    
+    /* Basic form styling */
+    .pgte {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .sheet-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    .character-title {
+      font-size: 2.2em;
+      margin: 0;
+      font-weight: bold;
+    }
+    
+    .sheet-body {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* Resources row layout */
+    .resources-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 2rem;
+      margin: 1rem 0;
+      padding: 1rem;
+      background: rgba(255,255,255,0.05);
+      border-radius: 6px;
+      align-items: start;
+    }
+    
+    .resource-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .resource-group h4 {
+      margin: 0;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+    
+    /* Hits section styling */
+    .hits-section {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .hits-label-row {
+      display: flex;
+      align-items: center;
+    }
+    
+    .hits-label-row label {
+      display: block;
+      font-weight: normal;
+      margin: 0;
+    }
+    
+    .base-hits {
+      width: 40px;
+      text-align: center;
+      font-size: 0.9em;
+      margin-left: 0.25rem;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid var(--border-color);
+      color: inherit;
+      padding: 0.25rem;
+    }
+    
+    .hits-control {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .toggle-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      flex-shrink: 0;
+      margin-top: 0;
+    }
+    
+    .toggle-buttons button {
+      width: 20px;
+      height: 20px;
+      padding: 0;
+      font-size: 0.8em;
+      background: var(--color-primary-light);
+      color: white;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    
+    .toggle-buttons button:hover {
+      background: var(--color-primary-light-hover);
+    }
+    
+    /* Hit markers */
+    .hits-display {
+      display: flex;
+      gap: 2px;
+      align-items: center;
+    }
+    
+    .hit-marker {
+      font-size: 1.2em;
+      cursor: pointer;
+      line-height: 1;
+    }
+    
+    .hit-marker.filled {
+      color: var(--success-color);
+    }
+    
+    .hit-marker.empty {
+      color: #000000;
+    }
+    
+    /* Story tokens section */
+    .tokens-section {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .tokens-control {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .tokens-input {
+      width: 60px;
+      text-align: center;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid var(--border-color);
+      color: inherit;
+      padding: 0.25rem;
+    }
+    
+    /* Story die control */
+    .story-die-control {
+      display: flex;
+      flex-direction: row;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    
+    .story-die-select {
+      flex: 1;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid var(--border-color);
+      color: inherit;
+      padding: 0.25rem;
+    }
+    
+    .roll-story-die {
+      background: var(--color-primary-light);
+      border: 1px solid var(--border-color);
+      color: white;
+      padding: 0.5rem;
+      border-radius: 4px;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    
+    .roll-story-die:hover {
+      background: var(--color-primary-light-hover);
+    }
+    
+    /* Mental hits label styling */
+    .resource-group:nth-child(2) h4 span {
+      opacity: var(--hits-mental-opacity, 0);
+    }
+  </style>
+</head>div class="preview-header">
+      <h1>PGTE RPG Character Sheet Preview</h1>
+      <p>Local rendering - changes will show immediately (refresh to update)</p>
+    </div>
+
+    <form class="pgte" autocomplete="off">
+      <header class="sheet-header">
+        <h1 class="character-title">Test Character</h1>
+      </header>
+
+      <div class="sheet-body">
+        <!-- Resources Row -->
+        <div class="resources-row">
+          <div class="resource-group">
+            <h4>Hits <span style="opacity: var(--hits-physical-opacity, 1);">(Physical)</span></h4>
+            <div class="hits-section">
+              <div class="hits-control">
+                <div class="toggle-buttons">
+                  <button type="button" class="hits-up">▲</button>
+                  <button type="button" class="hits-down">▼</button>
+                </div>
+                <div class="hits-display">
+                  <span class="hit-marker filled">●</span>
+                  <span class="hit-marker filled">●</span>
+                  <span class="hit-marker empty">○</span>
+                  <span class="hit-marker empty">○</span>
+                </div>
+              </div>
+              <div class="hits-label-row">
+                <label>Max: <input type="number" value="5" min="1" max="10" class="base-hits"/></label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="resource-group">
+            <h4>Hits (Mental)</h4>
+            <div class="hits-section">
+              <div class="hits-control">
+                <div class="toggle-buttons">
+                  <button type="button" class="hits-up">▲</button>
+                  <button type="button" class="hits-down">▼</button>
+                </div>
+                <div class="hits-display">
+                  <span class="hit-marker filled">●</span>
+                  <span class="hit-marker filled">●</span>
+                  <span class="hit-marker empty">○</span>
+                  <span class="hit-marker empty">○</span>
+                </div>
+              </div>
+              <div class="hits-label-row">
+                <label>Max: <input type="number" value="5" min="1" max="10" class="base-hits"/></label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="resource-group">
+            <h4>Story Tokens</h4>
+            <div class="tokens-section">
+              <div class="tokens-control">
+                <div class="toggle-buttons">
+                  <button type="button" class="tokens-up">▲</button>
+                  <button type="button" class="tokens-down">▼</button>
+                </div>
+                <input type="number" value="3" min="0" class="tokens-input" placeholder="0"/>
+              </div>
+              <div class="hits-label-row" style="visibility: hidden; height: auto;">
+                <label>Max: <input type="number" min="1" max="10" class="base-hits" style="visibility: hidden;"/></label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="resource-group">
+            <h4>Story Die</h4>
+            <div class="story-die-control">
+              <button type="button" class="roll-story-die">Roll Story Die</button>
+              <select class="story-die-select">
+                <option value="d4">d4</option>
+                <option value="d6" selected>d6</option>
+                <option value="d8">d8</option>
+                <option value="d10">d10</option>
+                <option value="d12">d12</option>
+                <option value="d20">d20</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
