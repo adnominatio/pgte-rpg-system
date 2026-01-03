@@ -2,7 +2,7 @@
   "id": "pgte-rpg-system",
   "title": "A Practical Guide to Evil RPG",
   "description": "A narrative RPG system based on A Practical Guide to Evil",
-  "version": "1.0.36",
+  "version": "1.0.38",
   "compatibility": {
     "minimum": "11",
     "verified": "12"

@@ -24,6 +24,8 @@
   /* Hits visibility controls */
   --hits-physical-opacity: 1;
   --hits-mental-opacity: 0;
+  --hits-mental-display: none; /* Set to "flex" to show mental hits column */
+  --hits-mental-display-label: 0; /* Set to "1" to show "(Physical)" label when mental shown */
 }
 
   /* CSS Variables for easy color management */
@@ -146,6 +148,16 @@ textarea::placeholder {
   margin: 0;
   font-weight: bold;
   font-size: 1rem;
+}
+
+/* Mental hits column - controlled by --hits-mental-display flag */
+.resource-group:nth-child(2) {
+  display: var(--hits-mental-display, none);
+}
+
+/* Show "(Physical)" label only when mental hits are shown */
+.resource-group:nth-child(1) h4 span {
+  opacity: var(--hits-mental-display-label, 0);
 }
 
 .resource-group label {
@@ -668,7 +680,7 @@ button:disabled {
     <!-- Resources Row -->
     <div class="resources-row">
       <div class="resource-group">
-        <h4>Hits <span style="opacity: var(--hits-physical-opacity, 1);">(Physical)</span></h4>
+        <h4>Hits <span style="opacity: var(--hits-mental-display-label, 0);">(Physical)</span></h4>
         <div class="hits-section">
           <div class="hits-control">
             <div class="toggle-buttons">
@@ -756,6 +768,8 @@ button:disabled {
         </div>
       </div>
     </div>
+
+    <p style="font-style: italic; margin-top: 0.5rem; text-align: center;">Hits regenerate at 1 Hit per scene</p>
 
     <!-- Aspects in 3 columns -->
     <div class="aspects-section">
