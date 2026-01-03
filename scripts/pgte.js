@@ -138,23 +138,38 @@ class PGTEActorSheet extends ActorSheet {
     html.find('.roll-extra').click(this._onRollExtra.bind(this));
     html.find('.roll-item').click(this._onRollItem.bind(this));
 
-    // Hits toggles (supports both physical and mental)
-    html.find('.hits-up').click(ev => {
+    // Hits toggles (physical and mental)
+    html.find('.resource-group:nth-child(1) .hits-up').click(ev => {
       ev.preventDefault();
-      const hitType = ev.currentTarget.dataset.type || 'physical';
-      const current = this.actor.system.resources.hits[hitType].value || 0;
-      const max = this.actor.system.resources.hits[hitType].max || 6;
+      const current = this.actor.system.resources.hits.physical.value || 0;
+      const max = this.actor.system.resources.hits.physical.max || 6;
       if (current < max) {
-        this.actor.update({ [`system.resources.hits.${hitType}.value`]: current + 1 });
+        this.actor.update({ "system.resources.hits.physical.value": current + 1 });
       }
     });
 
-    html.find('.hits-down').click(ev => {
+    html.find('.resource-group:nth-child(1) .hits-down').click(ev => {
       ev.preventDefault();
-      const hitType = ev.currentTarget.dataset.type || 'physical';
-      const current = this.actor.system.resources.hits[hitType].value || 0;
+      const current = this.actor.system.resources.hits.physical.value || 0;
       if (current > 0) {
-        this.actor.update({ [`system.resources.hits.${hitType}.value`]: current - 1 });
+        this.actor.update({ "system.resources.hits.physical.value": current - 1 });
+      }
+    });
+
+    html.find('.resource-group:nth-child(2) .hits-up').click(ev => {
+      ev.preventDefault();
+      const current = this.actor.system.resources.hits.mental.value || 0;
+      const max = this.actor.system.resources.hits.mental.max || 6;
+      if (current < max) {
+        this.actor.update({ "system.resources.hits.mental.value": current + 1 });
+      }
+    });
+
+    html.find('.resource-group:nth-child(2) .hits-down').click(ev => {
+      ev.preventDefault();
+      const current = this.actor.system.resources.hits.mental.value || 0;
+      if (current > 0) {
+        this.actor.update({ "system.resources.hits.mental.value": current - 1 });
       }
     });
 

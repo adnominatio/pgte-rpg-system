@@ -61,15 +61,12 @@
     <!-- Resources Row -->
     <div class="resources-row">
       <div class="resource-group">
-        <h4>Hits <span style="opacity: var(--hits-physical-opacity, 0.3);">(Physical)</span></h4>
-        <div class="hits-section" style="opacity: var(--hits-physical-opacity, 0.3);">
-          <div class="hits-label-row">
-            <label>Max: <input name="system.resources.hits.physical.max" type="number" value="{{system.resources.hits.physical.max}}" min="1" max="10" class="base-hits"/></label>
-          </div>
+        <h4>Hits <span style="opacity: var(--hits-physical-opacity, 1);">(Physical)</span></h4>
+        <div class="hits-section">
           <div class="hits-control">
             <div class="toggle-buttons">
-              <button type="button" class="hits-up" data-type="physical">▲</button>
-              <button type="button" class="hits-down" data-type="physical">▼</button>
+              <button type="button" class="hits-up">▲</button>
+              <button type="button" class="hits-down">▼</button>
             </div>
             <div class="hits-display">
               {{#times system.resources.hits.physical.value}}
@@ -80,19 +77,19 @@
               {{/times}}
             </div>
           </div>
+          <div class="hits-label-row">
+            <label>Max: <input name="system.resources.hits.physical.max" type="number" value="{{system.resources.hits.physical.max}}" min="1" max="10" class="base-hits"/></label>
+          </div>
         </div>
       </div>
       
       <div class="resource-group">
-        <h4>Hits <span style="opacity: var(--hits-mental-opacity, 0);">(Mental)</span></h4>
-        <div class="hits-section" style="opacity: var(--hits-mental-opacity, 0);">
-          <div class="hits-label-row">
-            <label>Max: <input name="system.resources.hits.mental.max" type="number" value="{{system.resources.hits.mental.max}}" min="1" max="10" class="base-hits"/></label>
-          </div>
+        <h4>Hits (Mental)</h4>
+        <div class="hits-section">
           <div class="hits-control">
             <div class="toggle-buttons">
-              <button type="button" class="hits-up" data-type="mental">▲</button>
-              <button type="button" class="hits-down" data-type="mental">▼</button>
+              <button type="button" class="hits-up">▲</button>
+              <button type="button" class="hits-down">▼</button>
             </div>
             <div class="hits-display">
               {{#times system.resources.hits.mental.value}}
@@ -102,6 +99,9 @@
                 <span class="hit-marker empty">○</span>
               {{/times}}
             </div>
+          </div>
+          <div class="hits-label-row">
+            <label>Max: <input name="system.resources.hits.mental.max" type="number" value="{{system.resources.hits.mental.max}}" min="1" max="10" class="base-hits"/></label>
           </div>
         </div>
       </div>
@@ -116,12 +116,16 @@
             </div>
             <input name="system.resources.storyTokens.value" type="number" value="{{system.resources.storyTokens.value}}" min="0" class="tokens-input" placeholder="0"/>
           </div>
+          <div class="hits-label-row" style="visibility: hidden; height: auto;">
+            <label>Max: <input type="number" min="1" max="10" class="base-hits" style="visibility: hidden;"/></label>
+          </div>
         </div>
       </div>
       
       <div class="resource-group">
         <h4>Story Die</h4>
         <div class="story-die-control">
+          <button type="button" class="roll-story-die">Roll Story Die</button>
           <select name="system.resources.storyDie.value" class="story-die-select">
             <option value="d4" {{#if (eq system.resources.storyDie.value "d4")}}selected{{/if}}>d4</option>
             <option value="d6" {{#if (eq system.resources.storyDie.value "d6")}}selected{{/if}}>d6</option>
@@ -130,7 +134,6 @@
             <option value="d12" {{#if (eq system.resources.storyDie.value "d12")}}selected{{/if}}>d12</option>
             <option value="d20" {{#if (eq system.resources.storyDie.value "d20")}}selected{{/if}}>d20</option>
           </select>
-          <button type="button" class="roll-story-die">Roll Story Die</button>
         </div>
       </div>
     </div>

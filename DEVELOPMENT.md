@@ -38,6 +38,31 @@ Brief description of what was changed
 - Bump version to 1.0.XX
 ```
 
+### When to Push to Remote
+
+**Do NOT push with every commit.** Only push when:
+
+1. **Significant changes have been made** - Multiple features completed or major fixes
+2. **A stable version has been reached** - Code tested and working
+3. **You're confident in the changes** - Not experimental or untested changes
+
+**Recommended workflow:**
+- Make commits locally as you work (bump version for code changes)
+- Test thoroughly before pushing
+- When ready with a stable set of changes, ask before pushing:
+  - "Ready to push version 1.0.36 with [feature description]?"
+  - This gives a chance to review before publishing
+
+**Example scenario:**
+```
+❌ DON'T: Push after every single edit
+✅ DO:    Commit locally during development
+✅ DO:    Test thoroughly
+✅ DO:    Ask before pushing multiple related commits together
+```
+
+This keeps the git history clean and gives time to catch issues before they're pushed.
+
 ---
 
 ## System Structure Reference
