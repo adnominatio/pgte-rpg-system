@@ -126,21 +126,23 @@ class PGTEActorSheet extends ActorSheet {
     html.find('.roll-extra').click(this._onRollExtra.bind(this));
     html.find('.roll-item').click(this._onRollItem.bind(this));
 
-    // Hits toggles
+    // Hits toggles (supports both physical and mental)
     html.find('.hits-up').click(ev => {
       ev.preventDefault();
-      const current = this.actor.system.resources.hits.value || 0;
-      const max = this.actor.system.resources.hits.max || 6;
+      const hitType = ev.currentTarget.dataset.type || 'physical';
+      const current = this.actor.system.resources.hits[hitType].value || 0;
+      const max = this.actor.system.resources.hits[hitType].max || 6;
       if (current < max) {
-        this.actor.update({ "system.resources.hits.value": current + 1 });
+        this.actor.update({ [`system.resources.hits.${hitType}.value`]: current + 1 });
       }
     });
 
     html.find('.hits-down').click(ev => {
       ev.preventDefault();
-      const current = this.actor.system.resources.hits.value || 0;
+      const hitType = ev.currentTarget.dataset.type || 'physical';
+      const current = this.actor.system.resources.hits[hitType].value || 0;
       if (current > 0) {
-        this.actor.update({ "system.resources.hits.value": current - 1 });
+        this.actor.update({ [`system.resources.hits.${hitType}.value`]: current - 1 });
       }
     });
 
