@@ -267,6 +267,33 @@ class SystemActor extends Actor {
 }
 ```
 
+#### Mental Hits Feature Flag
+
+The system includes a feature-gated **Mental Hits** system that can be enabled for future versions. Currently hidden but fully functional in the code:
+
+**To Enable Mental Hits**, modify `styles/pgte.css`:
+
+```css
+:root {
+  --hits-mental-display: flex;      /* Show the mental hits column */
+  --hits-mental-display-label: 1;   /* Show "(Physical)" label */
+}
+```
+
+**What This Does:**
+- Reveals the "Hits (Mental)" column in the resources section
+- Shows the "(Physical)" label next to the physical hits (to distinguish the two types)
+- Both mental and physical hits track value and max independently
+- Event handlers in JavaScript already support both types
+
+**Use Case:**
+This allows the system to be released and used with only physical hits visible, while the mental hits infrastructure is complete and tested. When you're ready to roll out the feature to your campaign:
+1. Change the two CSS variables above
+2. Optionally update the regeneration text to mention both types
+3. The feature becomes immediately available - no code changes needed
+
+The data structure and JavaScript handlers are fully implemented and backward-compatible, so existing campaigns can be upgraded seamlessly.
+
 ### Module Compatibility
 
 Systems can depend on and interact with:

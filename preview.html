@@ -261,8 +261,9 @@ textarea::placeholder {
 /* Story die control */
 .story-die-control {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 0.5rem;
+  align-items: center;
 }
 
 .story-die-select {
@@ -629,7 +630,7 @@ button:disabled {
       
       <div class="form-group">
         <label>Story Archetype:</label>
-        <textarea name="system.details.archetype" rows="3" placeholder="Ambitious nobleman with delusions of grandeur">/></textarea>
+        <textarea name="system.details.archetype" rows="3" placeholder="Ambitious nobleman with delusions of grandeur"></textarea>
       </div>
     </div>
   </header>
