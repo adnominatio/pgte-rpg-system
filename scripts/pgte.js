@@ -73,8 +73,20 @@ class PGTEActorSheet extends ActorSheet {
     if (!context.system.resources) {
       context.system.resources = {
         storyDie: { value: "d4" },
-        hits: { value: 3, max: 3 },
+        hits: {
+          physical: { value: 3, max: 3 },
+          mental: { value: 0, max: 0 }
+        },
         storyTokens: { value: 0 }
+      };
+    } else if (!context.system.resources.hits.physical) {
+      // Migrate old flat hits structure to new separated structure
+      context.system.resources.hits = {
+        physical: {
+          value: context.system.resources.hits.value || 0,
+          max: context.system.resources.hits.max || 3
+        },
+        mental: { value: 0, max: 0 }
       };
     }
 
