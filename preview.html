@@ -3,46 +3,57 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PGTE Character Sheet Preview</title>
+  <title>PGTE Character Sheet Preview - Full Rendering</title>
   <style>
+    /* CSS Variables for easy color management */
     :root {
       --placeholder-color: rgba(100, 100, 100, 0.7);
       --text-color: rgba(255, 255, 255, 1);
       --border-color: rgba(255, 255, 255, 0.2);
       --background-light: rgba(255, 255, 255, 0.05);
       --background-medium: rgba(255, 255, 255, 0.1);
-      --color-primary: #4E0707;
-      --hover-primary: #B90E0A;
-      --roll-stat-name: rgba(114, 47, 55);
-      --roll-stat-name-hover: rgba(114, 47, 55, 0.2);
+      --color-primary: #4E0707; /*wine*/
+      --hover-primary: #B90E0A; /*crimson*/
+      --roll-stat-name: rgba(114, 47, 55);  /*wine*/
+      --roll-stat-name-hover: rgba(114, 47, 55, 0.2); /*pale wine*/
       --success-color: #27ae60;
-      --color-primary-light: #710C04;
-      --color-primary-light-hover: #B90E0A;
+      --color-primary-light: #710C04; /*blood*/
+      --color-primary-light-hover: #B90E0A; /*crimson*/
       --box-shadow: rgba(108, 92, 231, 0.2);
+      
+      /* Hits visibility controls */
+      --hits-physical-opacity: 1;
+      --hits-mental-opacity: 0;
     }
     
     body {
-      background: #1a1a1a;
-      color: #ffffff;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+      color: var(--text-color);
+      font-family: Arial, sans-serif;
       padding: 2rem;
       margin: 0;
+      min-height: 100vh;
     }
     
     .preview-container {
       max-width: 1200px;
       margin: 0 auto;
+      background: rgba(255, 255, 255, 0.02);
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     }
     
     .preview-header {
       text-align: center;
       margin-bottom: 2rem;
-      border-bottom: 2px solid rgba(255,255,255,0.2);
+      border-bottom: 2px solid var(--border-color);
       padding-bottom: 1rem;
     }
     
     .preview-header h1 {
       margin: 0 0 0.5rem 0;
+      font-size: 1.5em;
     }
     
     .preview-header p {
@@ -51,7 +62,6 @@
       font-size: 0.9rem;
     }
     
-    /* Basic form styling */
     .pgte {
       display: flex;
       flex-direction: column;
@@ -60,20 +70,122 @@
     .sheet-header {
       text-align: center;
       margin-bottom: 2rem;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 1rem;
     }
     
     .character-title {
+      text-align: center;
       font-size: 2.2em;
-      margin: 0;
+      margin: 0.5rem 0 1rem 0;
       font-weight: bold;
+      max-width: 300px;
+      margin-left: auto;
+      margin-right: auto;
     }
     
-    .sheet-body {
-      display: flex;
-      flex-direction: column;
+    .character-info {
+      max-width: 600px;
+      margin: 1rem auto;
     }
     
-    /* Resources row layout */
+    .form-group {
+      margin-bottom: 0.5rem;
+    }
+    
+    .form-group label {
+      display: block;
+      text-align: left;
+      font-weight: bold;
+      margin-bottom: 0.25rem;
+    }
+    
+    .form-group input,
+    .form-group textarea {
+      background: rgba(0, 0, 0, 0.3);
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 0.5rem;
+      font-family: inherit;
+      width: 100%;
+      max-width: 500px;
+      box-sizing: border-box;
+    }
+    
+    .form-group textarea {
+      resize: vertical;
+      min-height: 60px;
+    }
+    
+    input::placeholder,
+    textarea::placeholder {
+      color: var(--placeholder-color);
+      font-style: italic;
+    }
+    
+    h3 {
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.5rem;
+      margin: 1.5rem 0 1rem 0;
+    }
+    
+    /* Stats table */
+    .stats-section {
+      margin-bottom: 1.5rem;
+    }
+    
+    .stats-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1rem;
+    }
+    
+    .stats-table th,
+    .stats-table td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .stats-table th {
+      font-weight: bold;
+      background: rgba(0, 0, 0, 0.2);
+    }
+    
+    .roll-stat-name {
+      background: var(--background-medium);
+      border: 1px solid var(--border-color);
+      color: inherit;
+      font-weight: bold;
+      font-size: inherit;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 4px;
+      transition: all 0.2s;
+      width: 100%;
+      text-align: left;
+    }
+    
+    .roll-stat-name:hover {
+      background: var(--roll-stat-name-hover);
+      border-color: var(--roll-stat-name-hover);
+    }
+    
+    .stat-uses {
+      font-size: 0.9em;
+      opacity: 0.8;
+    }
+    
+    .stat-die select {
+      background: rgba(0, 0, 0, 0.3);
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+      padding: 0.25rem;
+      border-radius: 3px;
+    }
+    
+    /* Resources row layout - V0.1 IMPROVEMENTS */
     .resources-row {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -97,7 +209,13 @@
       font-size: 1rem;
     }
     
-    /* Hits section styling */
+    .resource-group label {
+      display: block;
+      font-weight: normal;
+      margin: 0;
+    }
+    
+    /* Hits section - V0.1 IMPROVEMENTS */
     .hits-section {
       display: flex;
       flex-direction: column;
@@ -109,10 +227,10 @@
       align-items: center;
     }
     
-    .hits-label-row label {
-      display: block;
-      font-weight: normal;
-      margin: 0;
+    .hits-control {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
     
     .base-hits {
@@ -120,51 +238,47 @@
       text-align: center;
       font-size: 0.9em;
       margin-left: 0.25rem;
-      background: rgba(255,255,255,0.1);
+      background: rgba(0, 0, 0, 0.3);
       border: 1px solid var(--border-color);
-      color: inherit;
+      color: var(--text-color);
       padding: 0.25rem;
-    }
-    
-    .hits-control {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+      border-radius: 3px;
     }
     
     .toggle-buttons {
       display: flex;
       flex-direction: column;
       gap: 2px;
-      flex-shrink: 0;
-      margin-top: 0;
     }
     
     .toggle-buttons button {
-      width: 20px;
-      height: 20px;
+      width: 24px;
+      height: 24px;
       padding: 0;
-      font-size: 0.8em;
+      font-size: 0.9em;
       background: var(--color-primary-light);
       color: white;
       border: none;
       border-radius: 3px;
       cursor: pointer;
+      font-weight: bold;
     }
     
     .toggle-buttons button:hover {
       background: var(--color-primary-light-hover);
     }
     
-    /* Hit markers */
+    /* Hit markers - green filled, gray empty */
     .hits-display {
       display: flex;
-      gap: 2px;
+      gap: 3px;
+      margin-left: 0.5rem;
       align-items: center;
+      flex-wrap: wrap;
     }
     
     .hit-marker {
-      font-size: 1.2em;
+      font-size: 1.3em;
       cursor: pointer;
       line-height: 1;
     }
@@ -174,10 +288,10 @@
     }
     
     .hit-marker.empty {
-      color: #000000;
+      color: #666666;
     }
     
-    /* Story tokens section */
+    /* Story tokens section - V0.1 IMPROVEMENTS */
     .tokens-section {
       display: flex;
       flex-direction: column;
@@ -193,26 +307,26 @@
     .tokens-input {
       width: 60px;
       text-align: center;
-      background: rgba(255,255,255,0.1);
+      background: rgba(0, 0, 0, 0.3);
+      color: var(--text-color);
       border: 1px solid var(--border-color);
-      color: inherit;
       padding: 0.25rem;
+      border-radius: 3px;
     }
     
     /* Story die control */
     .story-die-control {
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       gap: 0.5rem;
-      align-items: center;
     }
     
     .story-die-select {
-      flex: 1;
-      background: rgba(255,255,255,0.1);
+      background: rgba(0, 0, 0, 0.3);
+      color: var(--text-color);
       border: 1px solid var(--border-color);
-      color: inherit;
-      padding: 0.25rem;
+      padding: 0.5rem;
+      border-radius: 4px;
     }
     
     .roll-story-die {
@@ -223,102 +337,506 @@
       border-radius: 4px;
       transition: all 0.2s;
       cursor: pointer;
+      font-weight: bold;
     }
     
     .roll-story-die:hover {
       background: var(--color-primary-light-hover);
     }
     
-    /* Mental hits label styling */
-    .resource-group:nth-child(2) h4 span {
-      opacity: var(--hits-mental-opacity, 0);
+    /* Aspects */
+    .aspects-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .aspect-block {
+      border: 1px solid var(--background-medium);
+      background: rgba(255, 255, 255, 0.03);
+      padding: 0.75rem;
+      border-radius: 6px;
+    }
+    
+    .aspect-header label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 0.25rem;
+    }
+    
+    .aspect-header input {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.3);
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+      padding: 0.5rem;
+      border-radius: 3px;
+      margin-bottom: 0.5rem;
+      box-sizing: border-box;
+    }
+    
+    .aspect-details textarea {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.3);
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+      padding: 0.5rem;
+      border-radius: 3px;
+      min-height: 60px;
+      resize: vertical;
+      margin-bottom: 0.5rem;
+      box-sizing: border-box;
+    }
+    
+    .aspect-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    
+    .aspect-buttons button {
+      background: var(--color-primary);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 0.5rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .aspect-buttons button:hover {
+      background: var(--color-primary-light-hover);
+    }
+    
+    /* Items section */
+    .items-section {
+      margin-bottom: 1.5rem;
+    }
+    
+    .items-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .item-row {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    
+    .item-row input[type="text"] {
+      flex: 1;
+      background: rgba(0, 0, 0, 0.3);
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+      padding: 0.5rem;
+      border-radius: 3px;
+    }
+    
+    .qty-input {
+      width: 50px;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.3);
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+      padding: 0.25rem;
+      border-radius: 3px;
+    }
+    
+    /* Notes section */
+    .notes-section {
+      margin: 1.5rem 0;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 6px;
+    }
+    
+    .notes-label label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    
+    .notes-area textarea {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.3);
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+      padding: 0.5rem;
+      border-radius: 3px;
+      min-height: 100px;
+      resize: vertical;
+      box-sizing: border-box;
+    }
+    
+    .bonus-dice-section {
+      display: flex;
+      gap: 2rem;
+      margin: 1rem 0;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 6px;
+    }
+    
+    .item-dice-group {
+      flex: 2;
+    }
+    
+    .item-dice-group h4 {
+      margin: 0 0 0.5rem 0;
+      font-weight: bold;
+    }
+    
+    .item-dice-row {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+      align-items: center;
+    }
+    
+    .item-dice-row input {
+      flex: 1;
+      background: rgba(0, 0, 0, 0.3);
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+      padding: 0.5rem;
+      border-radius: 3px;
+    }
+    
+    .item-dice-row select {
+      background: rgba(0, 0, 0, 0.3);
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+      padding: 0.5rem;
+      border-radius: 3px;
+      min-width: 70px;
+    }
+    
+    .item-dice-row button {
+      background: var(--color-primary-light);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    
+    .item-dice-row button:hover {
+      background: var(--color-primary-light-hover);
+    }
+    
+    .rule-of-cool-group {
+      flex: 1;
+    }
+    
+    .rule-of-cool-group h4 {
+      margin: 0 0 0.5rem 0;
+      font-weight: bold;
+    }
+    
+    .rule-of-cool-group button {
+      background: var(--color-primary-light);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      font-weight: bold;
+      width: 100%;
+    }
+    
+    .rule-of-cool-group button:hover {
+      background: var(--color-primary-light-hover);
     }
   </style>
-</head>div class="preview-header">
-      <h1>PGTE RPG Character Sheet Preview</h1>
-      <p>Local rendering - changes will show immediately (refresh to update)</p>
+</head>
+<body>
+  <div class="preview-container">
+    <div class="preview-header">
+      <h1>PGTE Character Sheet Preview</h1>
+      <p>This reflects the current template and V0.1 CSS improvements to layout and alignment</p>
     </div>
 
-    <form class="pgte" autocomplete="off">
-      <header class="sheet-header">
-        <h1 class="character-title">Test Character</h1>
-      </header>
+    <form class="pgte">
+      <div class="sheet-header">
+        <div class="character-title">Sample Character</div>
+        
+        <div class="character-info">
+          <div class="form-group">
+            <label>Personal Name:</label>
+            <input type="text" value="Thaddeus Blackwood" placeholder="Character Name"/>
+          </div>
+          
+          <div class="form-group">
+            <label>Story Archetype:</label>
+            <textarea placeholder="Ambitious nobleman with delusions of grandeur">A cunning merchant with a talent for deception and a secret past</textarea>
+          </div>
+        </div>
+      </div>
 
-      <div class="sheet-body">
-        <!-- Resources Row -->
-        <div class="resources-row">
-          <div class="resource-group">
-            <h4>Hits <span style="opacity: var(--hits-physical-opacity, 1);">(Physical)</span></h4>
-            <div class="hits-section">
-              <div class="hits-control">
-                <div class="toggle-buttons">
-                  <button type="button" class="hits-up">▲</button>
-                  <button type="button" class="hits-down">▼</button>
-                </div>
-                <div class="hits-display">
-                  <span class="hit-marker filled">●</span>
-                  <span class="hit-marker filled">●</span>
-                  <span class="hit-marker empty">○</span>
-                  <span class="hit-marker empty">○</span>
-                </div>
+      <!-- Stats Table -->
+      <div class="stats-section">
+        <h3>Stats</h3>
+        <table class="stats-table">
+          <thead>
+            <tr>
+              <th>Stat</th>
+              <th>Uses</th>
+              <th>Die</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><button type="button" class="roll-stat-name">SORCERY</button></td>
+              <td class="stat-uses">magical ability, arcane knowledge, bindings, rituals</td>
+              <td class="stat-die"><select><option selected>d4</option><option>d6</option><option>d8</option></select></td>
+            </tr>
+            <tr>
+              <td><button type="button" class="roll-stat-name">LIES</button></td>
+              <td class="stat-uses">stealth, flattery, charisma, deception</td>
+              <td class="stat-die"><select><option>d4</option><option selected>d6</option><option>d8</option></select></td>
+            </tr>
+            <tr>
+              <td><button type="button" class="roll-stat-name">VIOLENCE</button></td>
+              <td class="stat-uses">combat, weapons, physical threats</td>
+              <td class="stat-die"><select><option selected>d4</option><option>d6</option><option>d8</option></select></td>
+            </tr>
+            <tr>
+              <td><button type="button" class="roll-stat-name">BODY</button></td>
+              <td class="stat-uses">endurance, agility, strength</td>
+              <td class="stat-die"><select><option>d4</option><option>d6</option><option selected>d8</option></select></td>
+            </tr>
+            <tr>
+              <td><button type="button" class="roll-stat-name">MIND</button></td>
+              <td class="stat-uses">knowledge, investigation, quick-thinking</td>
+              <td class="stat-die"><select><option>d4</option><option selected>d6</option><option>d8</option></select></td>
+            </tr>
+            <tr>
+              <td><button type="button" class="roll-stat-name">HEART</button></td>
+              <td class="stat-uses">insight, foresight, people skills, Story-awareness</td>
+              <td class="stat-die"><select><option>d4</option><option selected>d6</option><option>d8</option></select></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Resources Row - V0.1 IMPROVED LAYOUT -->
+      <div class="resources-row">
+        <div class="resource-group">
+          <h4>Hits <span style="opacity: var(--hits-physical-opacity, 0.3);">(Physical)</span></h4>
+          <div class="hits-section" style="opacity: var(--hits-physical-opacity, 0.3);">
+            <div class="hits-label-row">
+              <label>Max: <input type="number" value="6" min="1" max="10" class="base-hits"/></label>
+            </div>
+            <div class="hits-control">
+              <div class="toggle-buttons">
+                <button type="button">▲</button>
+                <button type="button">▼</button>
               </div>
-              <div class="hits-label-row">
-                <label>Max: <input type="number" value="5" min="1" max="10" class="base-hits"/></label>
+              <div class="hits-display">
+                <span class="hit-marker filled">●</span>
+                <span class="hit-marker filled">●</span>
+                <span class="hit-marker filled">●</span>
+                <span class="hit-marker empty">○</span>
+                <span class="hit-marker empty">○</span>
+                <span class="hit-marker empty">○</span>
               </div>
             </div>
           </div>
-          
-          <div class="resource-group">
-            <h4>Hits (Mental)</h4>
-            <div class="hits-section">
-              <div class="hits-control">
-                <div class="toggle-buttons">
-                  <button type="button" class="hits-up">▲</button>
-                  <button type="button" class="hits-down">▼</button>
-                </div>
-                <div class="hits-display">
-                  <span class="hit-marker filled">●</span>
-                  <span class="hit-marker filled">●</span>
-                  <span class="hit-marker empty">○</span>
-                  <span class="hit-marker empty">○</span>
-                </div>
+        </div>
+        
+        <div class="resource-group">
+          <h4>Hits <span style="opacity: var(--hits-mental-opacity, 0);">(Mental)</span></h4>
+          <div class="hits-section" style="opacity: var(--hits-mental-opacity, 0);">
+            <div class="hits-label-row">
+              <label>Max: <input type="number" value="4" min="1" max="10" class="base-hits"/></label>
+            </div>
+            <div class="hits-control">
+              <div class="toggle-buttons">
+                <button type="button">▲</button>
+                <button type="button">▼</button>
               </div>
-              <div class="hits-label-row">
-                <label>Max: <input type="number" value="5" min="1" max="10" class="base-hits"/></label>
+              <div class="hits-display">
+                <span class="hit-marker filled">●</span>
+                <span class="hit-marker empty">○</span>
+                <span class="hit-marker empty">○</span>
+                <span class="hit-marker empty">○</span>
               </div>
             </div>
           </div>
-          
-          <div class="resource-group">
-            <h4>Story Tokens</h4>
-            <div class="tokens-section">
-              <div class="tokens-control">
-                <div class="toggle-buttons">
-                  <button type="button" class="tokens-up">▲</button>
-                  <button type="button" class="tokens-down">▼</button>
-                </div>
-                <input type="number" value="3" min="0" class="tokens-input" placeholder="0"/>
+        </div>
+        
+        <div class="resource-group">
+          <h4>Story Tokens</h4>
+          <div class="tokens-section">
+            <div class="tokens-control">
+              <div class="toggle-buttons">
+                <button type="button">▲</button>
+                <button type="button">▼</button>
               </div>
-              <div class="hits-label-row" style="visibility: hidden; height: auto;">
-                <label>Max: <input type="number" min="1" max="10" class="base-hits" style="visibility: hidden;"/></label>
+              <input type="number" value="2" min="0" class="tokens-input" placeholder="0"/>
+            </div>
+          </div>
+        </div>
+        
+        <div class="resource-group">
+          <h4>Story Die</h4>
+          <div class="story-die-control">
+            <select class="story-die-select">
+              <option>d4</option>
+              <option selected>d6</option>
+              <option>d8</option>
+              <option>d10</option>
+              <option>d12</option>
+              <option>d20</option>
+            </select>
+            <button type="button" class="roll-story-die">Roll Story Die</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Aspects -->
+      <div>
+        <h3>Aspects</h3>
+        <p><em>Choose 2 at start, gain 3rd through play</em></p>
+        
+        <div class="aspects-grid">
+          <div class="aspect-block">
+            <div class="aspect-header">
+              <label>1st Aspect:</label>
+              <input type="text" value="The Silver Tongue" placeholder="Aspect Name"/>
+            </div>
+            <div class="aspect-details">
+              <div class="form-group">
+                <label>Nature:</label>
+                <textarea placeholder="Its groove in the story">A natural chameleon, able to blend into any social situation</textarea>
+              </div>
+              <div class="aspect-buttons">
+                <button type="button">+D4 Passive</button>
+                <button type="button">+D12 Active</button>
               </div>
             </div>
           </div>
-          
-          <div class="resource-group">
-            <h4>Story Die</h4>
-            <div class="story-die-control">
-              <button type="button" class="roll-story-die">Roll Story Die</button>
-              <select class="story-die-select">
-                <option value="d4">d4</option>
-                <option value="d6" selected>d6</option>
-                <option value="d8">d8</option>
-                <option value="d10">d10</option>
-                <option value="d12">d12</option>
-                <option value="d20">d20</option>
-              </select>
+
+          <div class="aspect-block">
+            <div class="aspect-header">
+              <label>2nd Aspect:</label>
+              <input type="text" value="Hidden Depths" placeholder="Aspect Name"/>
+            </div>
+            <div class="aspect-details">
+              <div class="form-group">
+                <label>Nature:</label>
+                <textarea placeholder="Its groove in the story">A mysterious past that shapes every decision</textarea>
+              </div>
+              <div class="aspect-buttons">
+                <button type="button">+D4 Passive</button>
+                <button type="button">+D12 Active</button>
+              </div>
             </div>
           </div>
+
+          <div class="aspect-block">
+            <div class="aspect-header">
+              <label>3rd Aspect:</label>
+              <input type="text" value="" placeholder="Aspect Name"/>
+            </div>
+            <div class="aspect-details">
+              <div class="form-group">
+                <label>Nature:</label>
+                <textarea placeholder="Its groove in the story"></textarea>
+              </div>
+              <div class="aspect-buttons">
+                <button type="button">+D4 Passive</button>
+                <button type="button">+D20 Active</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Magical Items and Rule of Cool -->
+      <div class="bonus-dice-section">
+        <div class="item-dice-group">
+          <h4>Magical Items</h4>
+          <div class="item-dice-row">
+            <input type="text" value="Enchanted Pendant" placeholder="Item"/>
+            <select>
+              <option>—</option>
+              <option selected>d6</option>
+              <option>d8</option>
+            </select>
+            <button type="button">Roll</button>
+          </div>
+          <div class="item-dice-row">
+            <input type="text" value="Family Heirloom" placeholder="Item"/>
+            <select>
+              <option>—</option>
+              <option>d4</option>
+              <option selected>d6</option>
+            </select>
+            <button type="button">Roll</button>
+          </div>
+          <div class="item-dice-row">
+            <input type="text" placeholder="Item"/>
+            <select>
+              <option selected>—</option>
+              <option>d4</option>
+              <option>d6</option>
+            </select>
+            <button type="button">Roll</button>
+          </div>
+        </div>
+
+        <div class="rule-of-cool-group">
+          <h4>Rule of Cool</h4>
+          <button type="button">Roll D4</button>
+        </div>
+      </div>
+
+      <!-- Items List -->
+      <div class="items-section">
+        <h3>Items</h3>
+        <div class="items-list">
+          <div class="item-row">
+            <input type="text" value="Gold Coins" placeholder="Item Name"/>
+            <input type="number" value="47" min="0" class="qty-input"/>
+            <div class="toggle-buttons">
+              <button type="button">▲</button>
+              <button type="button">▼</button>
+            </div>
+          </div>
+          <div class="item-row">
+            <input type="text" value="Lock picks" placeholder="Item Name"/>
+            <input type="number" value="2" min="0" class="qty-input"/>
+            <div class="toggle-buttons">
+              <button type="button">▲</button>
+              <button type="button">▼</button>
+            </div>
+          </div>
+          <div class="item-row">
+            <input type="text" value="Fine clothes" placeholder="Item Name"/>
+            <input type="number" value="1" min="0" class="qty-input"/>
+            <div class="toggle-buttons">
+              <button type="button">▲</button>
+              <button type="button">▼</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pattern of Three Notes -->
+      <div class="notes-section">
+        <div class="notes-label">
+          <label>Patterns of Three:</label>
+        </div>
+        <div class="notes-area">
+          <textarea placeholder="Notes about patterns, recurring themes, or story elements...">- Power corrupts those who wield it
+- Secrets always have consequences  
+- Loyalty is the only currency that matters</textarea>
         </div>
       </div>
     </form>
